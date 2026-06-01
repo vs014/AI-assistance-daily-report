@@ -1,6 +1,8 @@
 .env
 reports/
 data/article_cache.json
+data/macro_cache.json
+data/news_cache.json
 __pycache__/
 *.pyc
 .venv/
