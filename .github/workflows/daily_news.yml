@@ -1,0 +1,32 @@
+name: Daily News Email
+
+on:
+  schedule:
+    - cron: "0 22 * * *"   # UTC 22:00 = KST 07:00
+  workflow_dispatch:        # 수동 테스트 실행 가능
+
+jobs:
+  send-news:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies (weasyprint)
+        run: sudo apt-get update && sudo apt-get install -y libpango-1.0-0 libpangoft2-1.0-0
+
+      - name: Install Python dependencies
+        run: pip install -q -r requirements.txt
+
+      - name: Send daily news email
+        run: python scripts/send_daily_email.py
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
+          DAILY_TOPICS: ${{ secrets.DAILY_TOPICS }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}

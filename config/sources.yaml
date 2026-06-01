@@ -1,0 +1,52 @@
+sources:
+  - name: "Investing.com"
+    base_url: "https://investing.com"
+    requires_login: false
+    notes: "공개 기사는 trafilatura로 추출 가능"
+
+  - name: "한국경제 글로벌마켓"
+    base_url: "https://www.hankyung.com/globalmarket"
+    requires_login: true
+    notes: "유료 기사는 사용자 직접 로그인 세션 필요"
+
+  - name: "한국경제 코리아마켓"
+    base_url: "https://www.hankyung.com/economy"
+    requires_login: true
+    notes: "유료 기사는 사용자 직접 로그인 세션 필요"
+
+  - name: "Reuters"
+    base_url: "https://www.reuters.com"
+    requires_login: false
+
+  - name: "Bloomberg"
+    base_url: "https://www.bloomberg.com"
+    requires_login: true
+    notes: "대부분 유료 — 사용자 로그인 세션 필요"
+
+  - name: "기타 URL"
+    base_url: "*"
+    requires_login: false
+    notes: "사용자가 직접 입력한 임의 URL"
+
+# 신뢰할 수 있는 무료 접근 뉴스 소스 (웹 검색 프롬프트에서 사용)
+trusted_free:
+  global:
+    - domain: "reuters.com"
+      label: "Reuters"
+    - domain: "cnbc.com"
+      label: "CNBC"
+    - domain: "marketwatch.com"
+      label: "MarketWatch"
+    - domain: "ft.com"
+      label: "Financial Times"
+    - domain: "investing.com"
+      label: "Investing.com"
+  korean:
+    - domain: "hankyung.com"
+      label: "한국경제"
+    - domain: "mk.co.kr"
+      label: "매일경제"
+    - domain: "edaily.co.kr"
+      label: "이데일리"
+    - domain: "biz.chosun.com"
+      label: "조선비즈"

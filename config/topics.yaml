@@ -1,0 +1,40 @@
+topics:
+  - id: ai_semiconductor
+    label: "AI / 반도체"
+    description: "GPU, HBM, 메모리, AI 서버 수요와 관련 기업 영향"
+    keywords: ["AI", "반도체", "GPU", "HBM", "DRAM", "NAND", "NVIDIA", "SK하이닉스", "삼성전자", "AMD", "인텔"]
+
+  - id: datacenter_power
+    label: "데이터센터 / 전력 인프라"
+    description: "클라우드 CAPEX, 전력 설비, 변압기, 전력망 투자"
+    keywords: ["데이터센터", "전력", "CAPEX", "변압기", "전력망", "Eaton", "GE Vernova", "Siemens"]
+
+  - id: nuclear_smr
+    label: "원전 / SMR"
+    description: "전력 수요 증가와 장기 에너지 공급 구조"
+    keywords: ["원전", "SMR", "소형모듈원자로", "핵에너지", "Cameco", "Paladin", "NuScale"]
+
+  - id: cloud_bigtech
+    label: "클라우드 / 빅테크"
+    description: "AWS, Azure, GCP, AI 서비스 수익화와 CAPEX 흐름"
+    keywords: ["클라우드", "AWS", "Azure", "GCP", "Microsoft", "Google", "Amazon", "Meta", "Apple"]
+
+  - id: rate_fx_inflation
+    label: "금리 / 환율 / 물가"
+    description: "주식시장 밸류에이션과 위험자산 선호도"
+    keywords: ["금리", "Fed", "연준", "CPI", "PPI", "PCE", "달러", "환율", "인플레이션", "기준금리"]
+
+  - id: korean_stock
+    label: "한국 주식시장"
+    description: "코스피, 코스닥, 외국인 수급, 한국 대형주"
+    keywords: ["코스피", "코스닥", "삼성전자", "SK하이닉스", "LG에너지솔루션", "외국인", "기관"]
+
+  - id: us_stock
+    label: "미국 주식시장"
+    description: "S&P500, 나스닥, 성장주, 레버리지 ETF"
+    keywords: ["S&P500", "나스닥", "NYSE", "SOXL", "QQQ", "SPY", "레버리지", "ETF", "성장주"]
+
+  - id: energy_material
+    label: "에너지 / 원자재"
+    description: "유가, 천연가스, 구리, 금 등 원자재 흐름"
+    keywords: ["유가", "WTI", "천연가스", "구리", "금", "원자재", "OPEC", "에너지"]

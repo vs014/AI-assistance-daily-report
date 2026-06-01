@@ -1,0 +1,134 @@
+{
+  "news_ai_semiconductor_datacenter_power_nuclear_smr_2026-06-01": {
+    "AI / 반도체": [
+      {
+        "title": "Micron, AI 메모리 부족 수혜로 시가총액 1조달러 돌파",
+        "summary": "AI 워크로드 확대로 HBM·DRAM 수요가 급증하면서 Micron이 강한 랠리를 이어가고 있습니다.\n시장에서는 GPU뿐 아니라 메모리 공급업체가 AI 인프라의 핵심 수혜주가 되고 있다는 해석이 나옵니다.",
+        "url": "https://www.fxleaders.com/news/2026/06/01/micron-tops-1-trillion-as-ai-memory-shortage-drives-910-rally-ubs-sees-mu-reaching-1625/",
+        "source": "FX Leaders"
+      },
+      {
+        "title": "NVIDIA, Vera Rubin 플랫폼 본격 양산 선언",
+        "summary": "NVIDIA가 차세대 Vera Rubin 플랫폼의 본격 생산을 발표하며 AI 팩토리 확장 전략을 강화했습니다.\n대규모 GPU 클러스터와 네트워킹, 전력 효율 개선이 함께 언급되며 AI 인프라 투자 모멘텀이 이어지고 있습니다.",
+        "url": "https://www.globenewswire.com/news-release/2026/06/01/3303979/0/en/nvidia-vera-rubin-ramps-into-full-production-to-power-agentic-ai-factories-worldwide.html",
+        "source": "GlobeNewswire"
+      },
+      {
+        "title": "NVIDIA, Computex 2026에서 RTX Spark Superchip 공개",
+        "summary": "새 플랫폼은 Arm CPU와 Blackwell GPU, 128GB 통합 메모리를 결합해 AI 중심의 PC/노트북 구성을 강조했습니다.\nGPU 성능뿐 아니라 메모리 용량과 통합 구조가 차세대 AI PC 경쟁 포인트로 부각되고 있습니다.",
+        "url": "https://www.tomshardware.com/news/archive/2026/06",
+        "source": "Tom's Hardware"
+      },
+      {
+        "title": "HBM 수요 급증으로 메모리 시장 구조 변화 가속",
+        "summary": "AI 수요가 HBM과 DRAM 생산 능력을 빠르게 흡수하면서 메모리 업계의 공급 부족 우려가 커지고 있습니다.\n일부 보도는 2026년 HBM 물량이 장기 계약으로 대부분 선판매됐다고 전하고 있습니다.",
+        "url": "https://www.reuters.com/world/china/",
+        "source": "Reuters"
+      },
+      {
+        "title": "AI 인프라 붐, SK하이닉스·Micron 등 메모리 반도체 기업 재평가",
+        "summary": "AI 붐이 GPU, 메모리칩, AI 클라우드 기업들의 기업가치 상승을 이끌고 있다는 분석입니다.\nHBM과 DRAM이 AI 데이터센터 성장을 좌우하는 핵심 부품으로 다시 주목받고 있습니다.",
+        "url": "https://www.fnnews.com/ampNews/202605271039374309",
+        "source": "파이낸셜뉴스"
+      }
+    ],
+    "데이터센터 / 전력 인프라": [
+      {
+        "title": "Exelon raises capex plan on data center demand, tops quarterly estimates",
+        "summary": "데이터센터 전력 수요 증가가 유틸리티의 설비투자(CAPEX) 확대를 이끄는 사례입니다. Exelon이 데이터센터 수요를 반영해 투자 계획을 상향 조정했고, 분기 실적도 시장 기대를 웃돌았습니다.",
+        "url": "https://www.investing.com/news/stock-market-news/exelon-raises-capex-plan-on-data-center-demand-tops-quarterly-estimates-4502920",
+        "source": "Reuters"
+      },
+      {
+        "title": "US power grid operator PJM is considering market overhaul",
+        "summary": "PJM이 데이터센터발 전력 수요 급증과 공급 부족 위험에 대응하기 위해 시장 구조 개편을 검토 중입니다. 전력망의 가격·조달 메커니즘 변화가 데이터센터 연결 속도와 전력 안정성에 영향을 줄 수 있습니다.",
+        "url": "https://www.investing.com/news/commodities-news/us-power-grid-operator-pjm-is-considering-market-overhaul-4665445",
+        "source": "Reuters"
+      },
+      {
+        "title": "CoreWeave signals higher capex as component costs rise, shares fall",
+        "summary": "AI 클라우드 인프라 기업 CoreWeave가 부품 가격 상승을 이유로 연간 CAPEX 하단을 상향했습니다. 데이터센터 확장과 전력 확보 비용이 동시에 커지고 있다는 점이 핵심입니다.",
+        "url": "https://www.investing.com/news/stock-market-news/coreweave-tops-revenue-estimates-as-ai-boom-supercharges-cloud-demand-4669786",
+        "source": "Reuters"
+      },
+      {
+        "title": "US Utility Threatens to Quit Power Grids on Data Center Rift",
+        "summary": "데이터센터 부하 부담을 둘러싼 갈등이 일부 유틸리티의 전력망 이탈 가능성까지 불러오고 있습니다. 전력망 운영 방식과 대형 수요처 분담 구조가 주요 쟁점입니다.",
+        "url": "https://www.bloomberg.com/news/articles/2026-05-05/aep-weighs-break-from-two-of-america-s-biggest-power-grids?srnd=phx-markets",
+        "source": "Bloomberg"
+      },
+      {
+        "title": "Data Centers Push Power Bills Up 76% on Largest US Grid, Report Shows",
+        "summary": "PJM에서 데이터센터 수요가 전력요금 급등 압력으로 작용하고 있다는 분석입니다. 대규모 전력 수요가 전력망 비용과 소비자 부담을 동시에 키우고 있습니다.",
+        "url": "https://www.bloomberg.com/news/articles/2026-05-14/data-centers-drive-76-rise-in-power-bills-on-largest-us-grid",
+        "source": "Bloomberg"
+      }
+    ],
+    "원전 / SMR": [
+      {
+        "title": "원안위, 2026년 예산 2927억원 확정…SMR 규제개발 주력",
+        "summary": "원자력안전위원회가 2026년도 예산과 기금 규모를 총 2927억원으로 확정하고, 소형모듈원자로(SMR) 규제와 심사 기준 마련에 집중하기로 했습니다.\n대규모 원전 사고 대응을 위한 방재 체계도 함께 강화할 계획입니다.",
+        "url": "https://www.dongascience.com/ko/news/75376",
+        "source": "동아사이언스"
+      },
+      {
+        "title": "원자력학회 “SMR은 건설 아닌 제조업…12차 전기본에 추가 반영해야”",
+        "summary": "한국원자력학회는 급증하는 전력 수요와 탄소중립 대응을 위해 SMR의 추가 반영이 필요하다고 주장했습니다.\n특히 SMR을 ‘건설’보다 ‘제조’ 관점에서 봐야 한다며, 기존 전력계획의 보완을 요구했습니다.",
+        "url": "https://www.asiae.co.kr/article/2026020509565504285",
+        "source": "아시아경제"
+      },
+      {
+        "title": "원안위, 소형모듈원자로 규제 로드맵 발표…2030년까지 개편",
+        "summary": "원자력안전위원회가 SMR에 맞춘 새로운 규제 체계를 마련하고, 2030년까지 규제 로드맵을 개편하겠다고 밝혔습니다.\nSMR 규제연구와 전담 조직 강화도 함께 추진됩니다.",
+        "url": "https://www.fnnews.com/ampNews/202602121643583665",
+        "source": "파이낸셜뉴스"
+      },
+      {
+        "title": "국내 차세대 원전 인허가 본격화…i-SMR 표준설계인가 임박",
+        "summary": "혁신형 SMR(i-SMR)의 국내 인허가 절차가 본격화되며, 표준설계인가 신청이 임박했다는 보도가 나왔습니다.\n2028년 인허가 획득과 2031년 첫 모듈 완성을 기대하는 내용도 함께 전해졌습니다.",
+        "url": "https://www.fnnews.com/ampNews/202602080730532967",
+        "source": "파이낸셜뉴스"
+      },
+      {
+        "title": "혁신형 SMR 표준설계 인가 신청…“세계 무대 진출 이정표될 것”",
+        "summary": "i-SMR 기술개발사업단이 원자력안전위원회에 표준설계 인가를 공식 신청했습니다.\n170MWe급 i-SMR이 글로벌 SMR 시장 진출의 기반이 될 수 있다는 점이 강조됐습니다.",
+        "url": "https://www.asiae.co.kr/article/2026022616575528262",
+        "source": "아시아경제"
+      }
+    ]
+  },
+  "news_ai_semiconductor_2026-06-01": {
+    "AI / 반도체": [
+      {
+        "title": "Samsung·SK hynix, AI 메모리 부족이 2027년 이후까지 이어질 수 있다고 경고",
+        "summary": "HBM 수요 급증으로 AI 메모리 공급 부족이 장기화될 가능성이 제기됐습니다.\n삼성은 2026년 1분기 실적에서 메모리 호황을 확인했고, 업계 전반의 DRAM 공급도 더 타이트해질 수 있다는 전망이 나왔습니다.",
+        "url": "https://www.tomshardware.com/tech-industry/artificial-intelligence/samsung-and-sk-hynix-warn-ai-driven-memory-shortages-could-last-until-2027-and-beyond-as-hbm-demand-explodes-customers-already-reserving-supply-years-ahead-while-the-wider-dram-market-begins-to-tighten",
+        "source": "Tom's Hardware"
+      },
+      {
+        "title": "Micron, AI 수요 급증으로 HBM·DRAM·NAND 공급 부족이 2026년 이후에도 지속될 수 있다고 경고",
+        "summary": "마이크론은 AI 관련 수요가 생산능력 확대 속도를 앞지르며 메모리 타이트한 상황이 이어질 수 있다고 시사했습니다.\n특히 HBM과 DRAM 중심의 공급 제약이 GPU/AI 가속기 시장 전반에 영향을 줄 수 있다는 해석이 나옵니다.",
+        "url": "https://wccftech.com/micron-warns-memory-crunch-will-outlast-2026-as-ai-demand-outpaces-what-hbm-dram-and-nand-can-supply/",
+        "source": "Wccftech"
+      },
+      {
+        "title": "AI 메모리 부족이 엔비디아 GPU 공급과 가격에도 압박을 주고 있다는 분석",
+        "summary": "AI 데이터센터 수요가 GPU 자체보다 HBM, DRAM 같은 메모리 공급을 병목으로 만들고 있다는 관측입니다.\n엔비디아 Blackwell 계열 가격과 리드타임이 상승하고, HBM3e 공급이 사실상 선매진됐다는 내용이 포함됩니다.",
+        "url": "https://www.neuralwired.com/2026/05/30/nvidia-gpu-shortage-2026-ai-compute/",
+        "source": "NeuralWired"
+      },
+      {
+        "title": "AMD 리사 수, HBM이 AI 칩 공급의 다음 병목이라고 언급",
+        "summary": "AMD CEO 리사 수의 발언을 인용해, AI 가속기 확대의 핵심 제약이 고대역폭 메모리(HBM)로 이동하고 있다는 점을 다뤘습니다.\nHBM3E의 생산 난이도와 웨이퍼 소모량이 높아 DRAM/메모리 투자 확대가 필요하다는 맥락입니다.",
+        "url": "https://www.techtimes.com/articles/317078/20260524/ai-memory-shortage-amds-lisa-su-identifies-high-bandwidth-memory-ai-chip-supplys-next-cap.htm",
+        "source": "Tech Times"
+      },
+      {
+        "title": "AI 메모리 슈퍼사이클: HBM이 GPU와 DRAM 시장의 핵심 변수로 부상",
+        "summary": "AI 서버 수요가 GPU뿐 아니라 HBM, DRAM 전반의 공급 구조를 재편하고 있다는 분석입니다.\n레거시 DRAM 가격 상승과 함께 AI 인프라 투자 확대가 메모리 업계 실적을 끌어올리고 있다는 점을 짚습니다.",
+        "url": "https://www.spglobal.com/market-intelligence/en/news-insights/research/2026/01/ai-memory-boom-squeezes-legacy-dram-supply-pushing-prices-higher",
+        "source": "S&P Global"
+      }
+    ]
+  }
+}

@@ -1,0 +1,7 @@
+.env
+reports/
+data/article_cache.json
+__pycache__/
+*.pyc
+.venv/
+venv/
