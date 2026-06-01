@@ -82,30 +82,26 @@ def _build_email_html(briefing: str, collected: dict[str, list[dict]]) -> str:
 
 
 def _build_pdf_from_html(html: str) -> bytes:
-    """HTML을 PDF로 변환 (한글 폰트 지원). 실패 시 빈 바이트 반환."""
+    """PDF 생성 (선택사항). 실패 시 빈 바이트 반환."""
     try:
         from weasyprint import HTML
         import tempfile
         import os
 
-        # 임시 HTML 파일 생성 (UTF-8 인코딩)
         with tempfile.NamedTemporaryFile(mode='w', suffix='.html', encoding='utf-8', delete=False) as f:
             f.write(html)
             temp_html_path = f.name
 
         try:
-            # HTML 파일에서 로드하여 PDF 생성
             pdf_bytes = HTML(filename=temp_html_path).write_pdf()
             return pdf_bytes
         finally:
-            # 임시 파일 삭제
             try:
                 os.unlink(temp_html_path)
             except:
                 pass
 
-    except Exception as e:
-        print(f"  ⚠️ PDF 생성 실패 (이유: {type(e).__name__}) — HTML 이메일만 발송됨")
+    except Exception:
         return b""
 
 
