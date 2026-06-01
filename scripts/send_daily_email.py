@@ -50,21 +50,62 @@ def _build_email_html(briefing: str, collected: dict[str, list[dict]]) -> str:
 
     # HTML로 변환
     html = markdown_to_html(articles_md, mermaid_code=None)
+
+    # 한글 폰트 CSS 추가 - Gmail/이메일 클라이언트에서 호환성 높음
+    korean_font_css = """
+    <style>
+    @charset "UTF-8";
+
+    * {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "맑은 고딕", "돋움", sans-serif !important;
+    }
+
+    html, body {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "맑은 고딕", "돋움", sans-serif !important;
+    }
+
+    h1, h2, h3, h4, h5, h6, p, div, span, a, li, td, th {
+        font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", "Malgun Gothic", "맑은 고딕", "돋움", sans-serif !important;
+    }
+    </style>
+    """
+
+    # <head> 태그 찾아서 CSS 주입
+    if '<head>' in html:
+        html = html.replace('<head>', f'<head>{korean_font_css}')
+    elif '<!DOCTYPE' in html:
+        html = html.replace('>', f'><head>{korean_font_css}</head><body>', 1)
+    else:
+        html = korean_font_css + html
+
     return html
 
 
 def _build_pdf_from_html(html: str) -> bytes:
-    """HTML을 PDF로 변환."""
+    """HTML을 PDF로 변환 (한글 폰트 지원). 실패 시 빈 바이트 반환."""
     try:
-        from weasyprint import HTML, CSS
-        # HTML 문자열을 PDF로 변환
-        pdf_bytes = HTML(string=html).write_pdf()
-        return pdf_bytes
-    except ImportError:
-        print("weasyprint 설치 필요: pip install weasyprint")
-        return b""
+        from weasyprint import HTML
+        import tempfile
+        import os
+
+        # 임시 HTML 파일 생성 (UTF-8 인코딩)
+        with tempfile.NamedTemporaryFile(mode='w', suffix='.html', encoding='utf-8', delete=False) as f:
+            f.write(html)
+            temp_html_path = f.name
+
+        try:
+            # HTML 파일에서 로드하여 PDF 생성
+            pdf_bytes = HTML(filename=temp_html_path).write_pdf()
+            return pdf_bytes
+        finally:
+            # 임시 파일 삭제
+            try:
+                os.unlink(temp_html_path)
+            except:
+                pass
+
     except Exception as e:
-        print(f"PDF 생성 실패: {e}")
+        print(f"  ⚠️ PDF 생성 실패 (이유: {type(e).__name__}) — HTML 이메일만 발송됨")
         return b""
 
 
