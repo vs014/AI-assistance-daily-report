@@ -17,15 +17,19 @@ from email.mime.multipart import MIMEMultipart
 from email.mime.text import MIMEText
 from email.mime.base import MIMEBase
 from email import encoders
-from datetime import date
+from datetime import date, timedelta
 from pathlib import Path
 
 # 프로젝트 루트를 path에 추가
 project_root = Path(__file__).parent.parent
 sys.path.insert(0, str(project_root))
 
-from src.news_searcher import collect_all_news, generate_daily_briefing
-from src.storage import load_daily_config
+from src.news_searcher import collect_all_news, generate_daily_briefing, search_news_for_topic, generate_monthly_summary
+from src.storage import (
+    load_daily_config, load_custom_topics,
+    save_to_monthly_archive, load_monthly_archive,
+    save_monthly_context, cleanup_old_monthly_data,
+)
 from src.html_exporter import markdown_to_html
 
 _BASE = project_root
@@ -155,11 +159,12 @@ def main():
 
     # 설정 로드
     config = load_daily_config()
-    topics = config.get("topics")
+    topics = config.get("topics") or []
+    custom_topic_ids = config.get("custom_topic_ids", [])
     recipients = config.get("emails", [])  # 여러 이메일 지원
 
     # 환경변수로 폴백
-    if not topics:
+    if not topics and not custom_topic_ids:
         topics_str = os.getenv("DAILY_TOPICS", "")
         topics = [t.strip() for t in topics_str.split(",") if t.strip()]
 
@@ -167,20 +172,57 @@ def main():
         single_recipient = os.getenv("EMAIL_RECIPIENT")
         recipients = [single_recipient] if single_recipient else []
 
-    if not topics or not recipients:
+    if not topics and not custom_topic_ids:
         print("✗ 설정 오류: 분야 또는 이메일이 설정되지 않았습니다.")
         print(f"  topics: {topics}")
+        print(f"  custom_topic_ids: {custom_topic_ids}")
         print(f"  recipients: {recipients}")
         return
 
+    if not recipients:
+        print("✗ 설정 오류: 수신자 이메일이 설정되지 않았습니다.")
+        return
+
+    # 커스텀 카테고리 로드
+    all_custom = load_custom_topics()
+    custom_for_email = [ct for ct in all_custom if ct["id"] in custom_topic_ids]
+
     print(f"\n📍 설정:")
-    print(f"  분야: {', '.join(topics)}")
+    if topics:
+        print(f"  기본 분야: {', '.join(topics)}")
+    if custom_for_email:
+        print(f"  커스텀 분야: {', '.join(ct['label'] for ct in custom_for_email)}")
     print(f"  수신자: {', '.join(recipients)} ({len(recipients)}명)")
 
     # 뉴스 수집
     print(f"\n🔍 뉴스 수집 중...")
-    collected = collect_all_news(topics)
+    collected = collect_all_news(topics) if topics else {}
+    for ct in custom_for_email:
+        collected[ct["label"]] = search_news_for_topic(ct)
     print(f"  ✓ {sum(len(arts) for arts in collected.values())}개 기사 수집")
+
+    # 월간 아카이브 저장
+    print(f"\n📁 월간 아카이브 저장 중...")
+    save_to_monthly_archive(collected)
+    print(f"  ✓ 아카이브 저장 완료")
+
+    # 매달 1일: 지난달 요약 생성 + 오래된 데이터 정리
+    today = date.today()
+    if today.day == 1:
+        last_month = (today.replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+        print(f"\n📊 {last_month} 월간 요약 생성 중...")
+        archive = load_monthly_archive(last_month)
+        if archive:
+            summary = generate_monthly_summary(archive)
+            if summary:
+                save_monthly_context(last_month, summary)
+                print(f"  ✓ {last_month} 월간 요약 생성 완료")
+            else:
+                print(f"  ⚠️ 월간 요약 생성 실패")
+        else:
+            print(f"  ⚠️ {last_month} 아카이브 데이터 없음")
+        cleanup_old_monthly_data()
+        print(f"  ✓ 오래된 아카이브 정리 완료")
 
     # 브리핑 생성
     print(f"\n💭 브리핑 생성 중...")

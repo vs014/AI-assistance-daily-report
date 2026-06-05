@@ -1,14 +1,22 @@
 import streamlit as st
 from datetime import date
 
-from src.topic_manager import get_topic_labels, format_topics_for_prompt
+from src.topic_manager import load_topics, get_topic_labels, format_topics_for_prompt
 from src.html_exporter import markdown_to_html
 from src.storage import (
     save_macro_report, list_reports,
     delete_macro_cache, delete_news_cache,
     save_daily_config, load_daily_config,
+    push_config_to_github,
+    load_custom_topics, add_custom_topics, remove_custom_topic, rename_custom_topic,
+    save_to_monthly_archive,
+    load_predefined_overrides, save_predefined_override, delete_predefined_override,
+    load_hidden_predefined, hide_predefined_topic, unhide_predefined_topic,
 )
-from src.news_searcher import collect_all_news, generate_daily_briefing
+from src.news_searcher import (
+    collect_all_news, generate_daily_briefing, extract_topics_from_query,
+    search_news_for_topic,
+)
 from src.macro_analyzer import (
     get_country_labels, get_categories_for_country,
     get_all_indicators_for_country,
@@ -25,17 +33,198 @@ st.set_page_config(
 st.title("📈 개인 경제 AI 비서")
 st.caption("기사 URL 기반 리포트 생성 · Macro 지표 대시보드 · 지표 사전")
 
+# 사이드바 관심 분야 목록 컴팩트 스타일
+st.markdown("""
+<style>
+section[data-testid="stSidebar"] [data-testid="stExpanderDetails"] .stCheckbox label p {
+    font-size: 0.76rem !important;
+    white-space: nowrap !important;
+    overflow: hidden !important;
+    text-overflow: ellipsis !important;
+    margin-bottom: 0 !important;
+}
+section[data-testid="stSidebar"] [data-testid="stExpanderDetails"] .stCheckbox {
+    padding-bottom: 0.1rem !important;
+    min-height: 0 !important;
+}
+section[data-testid="stSidebar"] [data-testid="stExpanderDetails"] .stButton button {
+    background: none !important;
+    border: none !important;
+    box-shadow: none !important;
+    padding: 0 2px !important;
+    font-size: 0.78rem !important;
+    min-height: auto !important;
+    height: auto !important;
+    line-height: 1 !important;
+    color: #555 !important;
+}
+section[data-testid="stSidebar"] [data-testid="stExpanderDetails"] .stButton button:hover {
+    background: none !important;
+    color: #111 !important;
+}
+@keyframes blink-n {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.15; }
+}
+.n-badge {
+    color: #e53935;
+    font-size: 0.68rem;
+    font-weight: bold;
+    animation: blink-n 1.4s ease-in-out infinite;
+    display: inline-block;
+    line-height: 1;
+}
+</style>
+""", unsafe_allow_html=True)
+
 # ── 사이드바 ──────────────────────────────────────────────────────────────────
+
+# 토픽 데이터 준비 (사이드바 블록 밖에서 먼저 계산)
+all_topics_data = load_topics()
+predefined_overrides = load_predefined_overrides()
+hidden_ids = load_hidden_predefined()
+
+visible_topics_data = [t for t in all_topics_data if t["id"] not in hidden_ids]
+
+predefined_label_to_original: dict[str, str] = {}
+predefined_display_labels: list[str] = []
+for _t in visible_topics_data:
+    _display = predefined_overrides.get(_t["id"], _t["label"])
+    predefined_display_labels.append(_display)
+    predefined_label_to_original[_display] = _t["label"]
+
+custom_topics = load_custom_topics()
+custom_topic_labels = [ct["label"] for ct in custom_topics]
+all_options = predefined_display_labels + custom_topic_labels
+all_topics = get_topic_labels()  # 하위 호환용 (original labels)
+
+# 첫 실행 시 visible 기본 분야 3개 선택
+if "topics_initialized" not in st.session_state:
+    for _t in visible_topics_data[:3]:
+        st.session_state[f"chk_{_t['id']}"] = True
+    st.session_state["topics_initialized"] = True
+
 with st.sidebar:
     st.header("⚙️ 설정")
 
-    all_topics = get_topic_labels()
-    selected_topics = st.multiselect(
-        "관심 분야 선택",
-        options=all_topics,
-        default=all_topics[:3],
-        help="리포트 생성 및 Macro 분석에 반영됩니다.",
+    # ── 서술식 입력 → AI 카테고리 추출 ──
+    st.subheader("🔎 관심 분야 직접 입력")
+    query_input = st.text_area(
+        "관심 분야를 자유롭게 입력하세요",
+        placeholder="예: AI 반도체 공급망 이슈랑 미국 금리 동향이 궁금해",
+        key="sidebar_query_input",
+        height=80,
     )
+    if st.button("🤖 AI로 분야 추출", key="extract_topics_btn"):
+        if query_input.strip():
+            with st.spinner("분야 추출 중..."):
+                try:
+                    extracted = extract_topics_from_query(query_input)
+                    add_custom_topics(extracted)
+                    st.success(f"✓ {len(extracted)}개 분야 추가됨")
+                    st.rerun()
+                except Exception as e:
+                    st.error(f"추출 실패: {e}")
+        else:
+            st.warning("텍스트를 입력해주세요.")
+
+    st.divider()
+
+    # ── 관심 분야 선택 (expander + 체크박스) ──
+    _n_pred = sum(1 for _t in visible_topics_data if st.session_state.get(f"chk_{_t['id']}", False))
+    _n_cust = sum(1 for ct in custom_topics if st.session_state.get(f"chk_{ct['id']}", False))
+    _n_total = _n_pred + _n_cust
+
+    with st.expander(f"관심 분야 선택 ({_n_total}개 선택됨)", expanded=False):
+        # 기본 분야
+        for _t in visible_topics_data:
+            _display = predefined_overrides.get(_t["id"], _t["label"])
+            _edit_key = f"editing_pred_{_t['id']}"
+
+            if st.session_state.get(_edit_key):
+                _new_name = st.text_input(
+                    "", value=_display,
+                    key=f"edit_input_pred_{_t['id']}",
+                    label_visibility="collapsed",
+                )
+                _c1, _c2 = st.columns(2)
+                if _c1.button("저장", key=f"save_pred_{_t['id']}"):
+                    if _new_name.strip() and _new_name.strip() != _t["label"]:
+                        save_predefined_override(_t["id"], _new_name.strip())
+                    elif _new_name.strip() == _t["label"]:
+                        delete_predefined_override(_t["id"])
+                    st.session_state[_edit_key] = False
+                    st.rerun()
+                if _c2.button("취소", key=f"cancel_pred_{_t['id']}"):
+                    st.session_state[_edit_key] = False
+                    st.rerun()
+            else:
+                _col_chk, _col_edit, _col_del = st.columns([6, 1, 1])
+                with _col_chk:
+                    st.checkbox(_display, key=f"chk_{_t['id']}")
+                with _col_edit:
+                    if st.button("✏️", key=f"editbtn_pred_{_t['id']}", help="이름 수정"):
+                        st.session_state[_edit_key] = True
+                        st.rerun()
+                with _col_del:
+                    if st.button("❌", key=f"delbtn_pred_{_t['id']}", help="숨기기"):
+                        hide_predefined_topic(_t["id"])
+                        st.rerun()
+
+        # 커스텀 분야
+        for ct in custom_topics:
+            _edit_key = f"editing_{ct['id']}"
+
+            if st.session_state.get(_edit_key):
+                _new_label = st.text_input(
+                    "", value=ct["label"],
+                    key=f"edit_input_{ct['id']}",
+                    label_visibility="collapsed",
+                )
+                _c1, _c2 = st.columns(2)
+                if _c1.button("저장", key=f"save_edit_{ct['id']}"):
+                    if _new_label.strip() and _new_label.strip() != ct["label"]:
+                        rename_custom_topic(ct["label"], _new_label.strip())
+                    st.session_state[_edit_key] = False
+                    st.rerun()
+                if _c2.button("취소", key=f"cancel_edit_{ct['id']}"):
+                    st.session_state[_edit_key] = False
+                    st.rerun()
+            else:
+                _col_chk, _col_n, _col_edit, _col_del = st.columns([5, 1, 1, 1])
+                with _col_chk:
+                    st.checkbox(ct["label"], key=f"chk_{ct['id']}")
+                with _col_n:
+                    st.markdown('<span class="n-badge">N</span>', unsafe_allow_html=True)
+                with _col_edit:
+                    if st.button("✏️", key=f"edit_custom_{ct['id']}", help="수정"):
+                        st.session_state[_edit_key] = True
+                        st.rerun()
+                with _col_del:
+                    if st.button("❌", key=f"del_custom_{ct['id']}", help="삭제"):
+                        remove_custom_topic(ct["label"])
+                        st.rerun()
+
+    # 체크박스 상태로부터 selected_topics 빌드
+    selected_topics: list[str] = []
+    for _t in visible_topics_data:
+        if st.session_state.get(f"chk_{_t['id']}", False):
+            selected_topics.append(predefined_overrides.get(_t["id"], _t["label"]))
+    for ct in custom_topics:
+        if st.session_state.get(f"chk_{ct['id']}", False):
+            selected_topics.append(ct["label"])
+
+    # 숨긴 기본 분야 복원 UI
+    if hidden_ids:
+        with st.expander(f"숨긴 분야 복원 ({len(hidden_ids)}개)", expanded=False):
+            for _t in all_topics_data:
+                if _t["id"] not in hidden_ids:
+                    continue
+                _col_lbl, _col_restore = st.columns([6, 1])
+                _col_lbl.caption(_t["label"])
+                if _col_restore.button("↩️", key=f"restore_{_t['id']}", help="복원"):
+                    unhide_predefined_topic(_t["id"])
+                    st.rerun()
 
     report_style = st.radio(
         "보고서 스타일",
@@ -69,8 +258,12 @@ with st.sidebar:
                 st.text(f"{i+1}. {email}")
             with col2:
                 if st.button("🗑️", key=f"remove_email_{i}"):
-                    current_emails.pop(i)
+                    removed_email = current_emails.pop(i)
                     save_daily_config(config.get("topics", []), current_emails)
+                    if push_config_to_github():
+                        st.success(f"✓ {removed_email} 삭제됨 (GitHub에 동기화됨)")
+                    else:
+                        st.warning(f"✓ {removed_email} 삭제됨 (GitHub 동기화 실패)")
                     st.rerun()
 
     # 새 이메일 추가
@@ -89,22 +282,32 @@ with st.sidebar:
             else:
                 current_emails.append(new_email)
                 save_daily_config(config.get("topics", []), current_emails)
-                st.success(f"✓ {new_email} 추가됨")
+                if push_config_to_github():
+                    st.success(f"✓ {new_email} 추가됨 (GitHub에 동기화됨)")
+                else:
+                    st.warning(f"✓ {new_email} 추가됨 (GitHub 동기화 실패 — 수동으로 push해주세요)")
                 st.rerun()
 
     with col_clear:
         if st.button("🗑️ 모두 삭제", key="clear_all_emails"):
             save_daily_config(config.get("topics", []), [])
-            st.warning("모든 이메일이 삭제되었습니다.")
+            if push_config_to_github():
+                st.warning("모든 이메일이 삭제되었습니다. (GitHub에 동기화됨)")
+            else:
+                st.warning("모든 이메일이 삭제되었습니다. (GitHub 동기화 실패)")
             st.rerun()
 
     # 분야 선택
     st.divider()
     st.write("**분야 선택:**")
+    # 저장된 topics(original labels)를 display labels로 변환해 default 표시
+    _original_to_display = {v: k for k, v in predefined_label_to_original.items()}
+    _saved_topics_display = [_original_to_display.get(t, t) for t in config.get("topics", [])]
+    _default_daily = [t for t in (_saved_topics_display or selected_topics) if t in all_options]
     daily_topics = st.multiselect(
         "매일 받을 분야",
-        options=all_topics,
-        default=config.get("topics", selected_topics),
+        options=all_options,
+        default=_default_daily,
         help="이 분야들의 뉴스를 매일 받게 됩니다.",
     )
 
@@ -112,14 +315,23 @@ with st.sidebar:
         if not daily_topics:
             st.error("분야를 하나 이상 선택해주세요.")
         else:
-            save_daily_config(daily_topics, current_emails)
+            predefined_daily_original = [
+                predefined_label_to_original.get(t, t)
+                for t in daily_topics if t in predefined_display_labels
+            ]
+            custom_daily_ids = [ct["id"] for ct in custom_topics if ct["label"] in daily_topics]
+            save_daily_config(predefined_daily_original, current_emails, custom_topic_ids=custom_daily_ids)
             st.success("✓ 분야 저장 완료!")
 
     # 현재 설정 요약
     if config:
         st.divider()
-        st.caption(f"📌 분야: {', '.join(config['topics'])}")
-        st.caption(f"📨 발송 대상: {len(config['emails'])}명" if config['emails'] else "📨 발송 대상: 0명")
+        saved_topics = config.get("topics", [])
+        saved_custom_ids = config.get("custom_topic_ids", [])
+        saved_custom_labels = [ct["label"] for ct in custom_topics if ct["id"] in saved_custom_ids]
+        all_saved_labels = saved_topics + saved_custom_labels
+        st.caption(f"📌 분야: {', '.join(all_saved_labels) if all_saved_labels else '없음'}")
+        st.caption(f"📨 발송 대상: {len(config['emails'])}명" if config.get('emails') else "📨 발송 대상: 0명")
 
 # ── 탭 구성 (4개) ────────────────────────────────────────────────────────────
 tab_generate, tab_macro, tab_dict, tab_preview = st.tabs([
@@ -138,7 +350,7 @@ with tab_generate:
 
     news_topics = st.multiselect(
         "검색할 분야 선택",
-        options=all_topics,
+        options=all_options,
         default=selected_topics,
         help="선택한 분야별로 각각 AI 웹 검색을 수행합니다.",
     )
@@ -172,8 +384,20 @@ with tab_generate:
 
             with st.spinner("모든 분야의 뉴스를 수집 중..."):
                 try:
-                    result = collect_all_news(news_topics)
+                    predefined_news_original = [
+                        predefined_label_to_original.get(t, t)
+                        for t in news_topics if t in predefined_display_labels
+                    ]
+                    custom_news_dicts = [ct for ct in custom_topics if ct["label"] in news_topics]
+
+                    result = {}
+                    if predefined_news_original:
+                        result.update(collect_all_news(predefined_news_original))
+                    for ct in custom_news_dicts:
+                        result[ct["label"]] = search_news_for_topic(ct)
+
                     st.session_state["news_result"] = result
+                    save_to_monthly_archive(result)
                     st.success("뉴스 검색 완료!")
                 except Exception as e:
                     st.error(f"뉴스 검색 실패: {e}")
@@ -270,7 +494,16 @@ with tab_macro:
         if not selected_categories:
             st.warning("카테고리를 하나 이상 선택해주세요.")
         else:
-            topics_str = format_topics_for_prompt(selected_topics) if selected_topics else "없음"
+            predefined_selected_original = [
+                predefined_label_to_original.get(t, t)
+                for t in selected_topics if t in predefined_display_labels
+            ]
+            custom_selected_dicts = [ct for ct in custom_topics if ct["label"] in selected_topics]
+            topics_predefined_str = format_topics_for_prompt(predefined_selected_original) if predefined_selected_original else ""
+            topics_custom_str = "\n".join(
+                f"- {ct['label']}: {', '.join(ct['keywords'])}" for ct in custom_selected_dicts
+            )
+            topics_str = "\n".join(filter(None, [topics_predefined_str, topics_custom_str])) or "없음"
 
             # watchlist 로드
             try:

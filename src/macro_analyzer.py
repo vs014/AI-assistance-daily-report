@@ -15,6 +15,7 @@ _PROMPTS_DIR = _BASE / "prompts"
 _CONFIG_DIR = _BASE / "config"
 _INDICATORS_PATH = _CONFIG_DIR / "macro_indicators.yaml"
 MODEL = os.getenv("OPENAI_MODEL", "gpt-4o-mini")
+SEARCH_MODEL = os.getenv("SEARCH_MODEL", "gpt-5.4-mini")
 
 _indicators_cache: dict | None = None
 
@@ -133,7 +134,7 @@ def _fetch_web_indicators(
     try:
         client = _client()
         response = client.responses.create(
-            model=MODEL,
+            model=SEARCH_MODEL,
             tools=[{"type": "web_search_preview"}],
             input=query,
         )
