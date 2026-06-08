@@ -32,6 +32,7 @@ from src.company_storage import (
     load_company_cache, save_company_cache, delete_company_cache,
     get_cached_company, load_company_watchlist, save_company_watchlist,
     add_company_to_watchlist, remove_company_from_watchlist,
+    load_company_report_config, save_company_report_config,
 )
 
 st.set_page_config(
