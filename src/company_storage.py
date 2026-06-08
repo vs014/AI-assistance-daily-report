@@ -140,3 +140,38 @@ def save_company_report_config(config: dict) -> None:
         json.dumps(current, ensure_ascii=False, indent=2),
         encoding="utf-8",
     )
+
+
+def save_detailed_report(ticker: str, detailed_report: dict) -> None:
+    """상세 보고서를 기업 캐시에 저장."""
+    _ensure_dir()
+    cache = load_company_cache()
+    if ticker in cache:
+        cache[ticker]["detailed_report"] = detailed_report
+        cache[ticker]["detailed_report_generated_at"] = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+        _COMPANY_CACHE_FILE.write_text(
+            json.dumps(cache, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )
+
+
+def load_detailed_report(ticker: str) -> dict | None:
+    """캐시에서 상세 보고서 로드."""
+    cache = load_company_cache()
+    if ticker in cache and "detailed_report" in cache[ticker]:
+        return cache[ticker]["detailed_report"]
+    return None
+
+
+def delete_detailed_report(ticker: str) -> None:
+    """캐시에서 상세 보고서 삭제."""
+    _ensure_dir()
+    cache = load_company_cache()
+    if ticker in cache and "detailed_report" in cache[ticker]:
+        del cache[ticker]["detailed_report"]
+        if "detailed_report_generated_at" in cache[ticker]:
+            del cache[ticker]["detailed_report_generated_at"]
+        _COMPANY_CACHE_FILE.write_text(
+            json.dumps(cache, ensure_ascii=False, indent=2),
+            encoding="utf-8",
+        )

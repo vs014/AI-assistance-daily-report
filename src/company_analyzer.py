@@ -122,12 +122,14 @@ def get_related_tags(company_data: dict, predefined_topics: list[dict], custom_t
 이 기업과 가장 관련된 기존 분야 ID를 최대 3개 추출해주세요.
 기존 분야에 없는 새로운 분야가 있으면 제안해주세요.
 
-**중요: 새로운 분야의 label은 반드시 한국어로 작성해주세요.**
+**중요: 새로운 분야의 id와 label 작성 규칙:**
+- id: 영어 소문자, 언더스코어 사용 (예: life_sciences, biotech_innovation)
+- label: 반드시 한국어로만 작성 (예: 생명과학, 바이오기술 혁신)
 
 JSON 배열 형식으로만 반환 (다른 텍스트 없음):
 [
   {{"id": "existing_topic_id", "is_new": false}},
-  {{"id": "new_topic_id", "label": "새로운 분야 (한국어)", "is_new": true}}
+  {{"id": "new_topic_id", "label": "생명과학 (한국어만)", "is_new": true}}
 ]
 """
 

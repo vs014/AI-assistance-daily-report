@@ -33,6 +33,7 @@ from src.company_storage import (
     get_cached_company, load_company_watchlist, save_company_watchlist,
     add_company_to_watchlist, remove_company_from_watchlist,
     load_company_report_config, save_company_report_config,
+    load_detailed_report, save_detailed_report, delete_detailed_report,
 )
 
 st.set_page_config(
@@ -951,17 +952,39 @@ with tab_company:
         st.divider()
 
         # 상세 보고서 요청
-        if st.button("📖 자세한 보고서 요청하기", key="detailed_report_btn"):
-            with st.spinner("상세 보고서 생성 중..."):
-                try:
-                    detailed = generate_detailed_report(company_data)
-                    st.session_state["detailed_report"] = detailed
-                    st.success("상세 보고서 생성 완료!")
-                except Exception as e:
-                    st.error(f"상세 보고서 생성 실패: {e}")
+        col_report_btn, col_delete_btn = st.columns([3, 1])
+        with col_report_btn:
+            if st.button("📖 자세한 보고서 요청하기", key="detailed_report_btn"):
+                # 캐시에서 먼저 확인
+                cached_report = load_detailed_report(ticker)
+                if cached_report:
+                    st.session_state["detailed_report"] = cached_report
+                    st.session_state["detailed_report_from_cache"] = True
+                    st.success("💾 캐시에서 로드된 상세 보고서입니다!")
+                else:
+                    with st.spinner("상세 보고서 생성 중..."):
+                        try:
+                            detailed = generate_detailed_report(company_data)
+                            st.session_state["detailed_report"] = detailed
+                            st.session_state["detailed_report_from_cache"] = False
+                            # 캐시에 저장
+                            save_detailed_report(ticker, detailed)
+                            st.success("상세 보고서 생성 완료! (캐시에 저장됨)")
+                        except Exception as e:
+                            st.error(f"상세 보고서 생성 실패: {e}")
+
+        with col_delete_btn:
+            if st.button("🗑️ 삭제", key="delete_detailed_report", help="캐시된 상세 보고서 삭제"):
+                delete_detailed_report(ticker)
+                if "detailed_report" in st.session_state:
+                    del st.session_state["detailed_report"]
+                st.success("상세 보고서가 삭제되었습니다.")
+                st.rerun()
 
         if "detailed_report" in st.session_state:
             st.markdown("### 📖 상세 보고서")
+            if st.session_state.get("detailed_report_from_cache"):
+                st.caption("💾 캐시에 저장된 보고서입니다. (생성일: 별도 확인 필요)")
             detailed = st.session_state.get("detailed_report", {})
 
             if isinstance(detailed, dict) and detailed:
