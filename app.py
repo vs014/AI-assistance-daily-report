@@ -951,7 +951,7 @@ with tab_company:
         st.divider()
 
         # 상세 보고서 요청
-        if st.button("📖 자세한 보고서 요청하기", key="detailed_report"):
+        if st.button("📖 자세한 보고서 요청하기", key="detailed_report_btn"):
             with st.spinner("상세 보고서 생성 중..."):
                 try:
                     detailed = generate_detailed_report(company_data)
