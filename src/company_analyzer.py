@@ -151,6 +151,7 @@ JSON 배열 형식으로만 반환 (다른 텍스트 없음):
 def generate_detailed_report(company_data: dict) -> dict:
     """
     기본 평가서를 바탕으로 섹션별 상세 보고서 생성.
+    각 섹션은 단일 문단으로 확장 설명 제공.
 
     반환값: {
         "overview_detailed": str,
@@ -166,57 +167,47 @@ def generate_detailed_report(company_data: dict) -> dict:
     if not company_data:
         return {}
 
-    prompt = f"""당신은 투자 분석가입니다. 다음 기업의 기본 평가서를 바탕으로 각 섹션을 상세히 확장해주세요.
+    # 각 섹션별로 개별 요청 (안정성 향상)
+    sections = {
+        "overview_detailed": ("기업 개요", company_data.get('overview', '')),
+        "business_detailed": ("사업 현황", company_data.get('business', '')),
+        "financials_detailed": ("재무 상황", company_data.get('financials', '')),
+        "management_detailed": ("경영진/지배구조", company_data.get('management', '')),
+        "investment_detailed": ("투자 포인트", company_data.get('investment_points', '')),
+        "risks_detailed": ("리스크", company_data.get('risks', '')),
+        "valuation_detailed": ("밸류에이션", company_data.get('valuation', '')),
+        "news_detailed": ("최신 뉴스", company_data.get('latest_news', '')),
+    }
+
+    result = {}
+    client = _get_client()
+
+    for section_key, (section_name, section_content) in sections.items():
+        if not section_content:
+            result[section_key] = ""
+            continue
+
+        prompt = f"""당신은 투자 분석가입니다. 다음 정보를 한 문단(3~5문장)으로 더 자세히 설명해주세요.
 
 기업명: {company_data.get('company_name', '')}
-티커: {company_data.get('ticker', '')}
+섹션: {section_name}
 
-기본 정보:
-- 기업 개요: {company_data.get('overview', '')}
-- 사업 현황: {company_data.get('business', '')}
-- 재무 상황: {company_data.get('financials', '')}
-- 경영진/지배구조: {company_data.get('management', '')}
-- 투자 포인트: {company_data.get('investment_points', '')}
-- 리스크: {company_data.get('risks', '')}
-- 밸류에이션: {company_data.get('valuation', '')}
-- 최신 뉴스: {company_data.get('latest_news', '')}
+내용: {section_content}
 
-각 섹션을 2~3문단(5~7문장)으로 더 자세히 설명하고, JSON 형식으로 반환해주세요.
-
-JSON 형식으로만 반환:
-{{
-  "overview_detailed": "기업 개요 상세",
-  "business_detailed": "사업 현황 상세",
-  "financials_detailed": "재무 상황 상세",
-  "management_detailed": "경영진 상세",
-  "investment_detailed": "투자 포인트 상세",
-  "risks_detailed": "리스크 상세",
-  "valuation_detailed": "밸류에이션 상세",
-  "news_detailed": "뉴스 상세"
-}}
-"""
-
-    try:
-        client = _get_client()
-        response = client.chat.completions.create(
-            model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
-            messages=[{"role": "user", "content": prompt}],
-            max_completion_tokens=2000,
-        )
-
-        result_text = response.choices[0].message.content.strip()
-        result_text = result_text.replace("```json", "").replace("```", "").strip()
+한 문단으로 확장 설명한 텍스트만 반환 (마크다운이나 구조화된 형식 없음):"""
 
         try:
-            detailed = json.loads(result_text)
-            if not isinstance(detailed, dict):
-                print(f"상세 보고서 JSON 파싱 결과가 dict가 아님: {type(detailed)}")
-                return {}
-            return detailed
-        except json.JSONDecodeError as je:
-            print(f"상세 보고서 JSON 파싱 실패: {je}")
-            print(f"응답 텍스트: {result_text[:200]}")
-            return {}
-    except Exception as e:
-        print(f"상세 보고서 생성 실패: {e}")
-        return {}
+            response = client.chat.completions.create(
+                model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
+                messages=[{"role": "user", "content": prompt}],
+                max_completion_tokens=256,
+            )
+
+            detailed_text = response.choices[0].message.content.strip()
+            result[section_key] = detailed_text
+
+        except Exception as e:
+            print(f"상세 보고서 '{section_name}' 생성 실패: {e}")
+            result[section_key] = section_content  # fallback: 원문 반환
+
+    return result
