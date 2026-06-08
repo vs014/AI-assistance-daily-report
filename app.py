@@ -962,24 +962,27 @@ with tab_company:
 
         if "detailed_report" in st.session_state:
             st.markdown("### 📖 상세 보고서")
-            detailed = st.session_state["detailed_report"]
+            detailed = st.session_state.get("detailed_report", {})
 
-            with st.expander("기업 개요 (상세)", expanded=False):
-                st.write(detailed.get("overview_detailed", ""))
-            with st.expander("사업 현황 (상세)", expanded=False):
-                st.write(detailed.get("business_detailed", ""))
-            with st.expander("재무 (상세)", expanded=False):
-                st.write(detailed.get("financials_detailed", ""))
-            with st.expander("경영진 (상세)", expanded=False):
-                st.write(detailed.get("management_detailed", ""))
-            with st.expander("투자 포인트 (상세)", expanded=False):
-                st.write(detailed.get("investment_detailed", ""))
-            with st.expander("리스크 (상세)", expanded=False):
-                st.write(detailed.get("risks_detailed", ""))
-            with st.expander("밸류에이션 (상세)", expanded=False):
-                st.write(detailed.get("valuation_detailed", ""))
-            with st.expander("뉴스/이슈 (상세)", expanded=False):
-                st.write(detailed.get("news_detailed", ""))
+            if isinstance(detailed, dict) and detailed:
+                with st.expander("기업 개요 (상세)", expanded=False):
+                    st.write(detailed.get("overview_detailed", ""))
+                with st.expander("사업 현황 (상세)", expanded=False):
+                    st.write(detailed.get("business_detailed", ""))
+                with st.expander("재무 (상세)", expanded=False):
+                    st.write(detailed.get("financials_detailed", ""))
+                with st.expander("경영진 (상세)", expanded=False):
+                    st.write(detailed.get("management_detailed", ""))
+                with st.expander("투자 포인트 (상세)", expanded=False):
+                    st.write(detailed.get("investment_detailed", ""))
+                with st.expander("리스크 (상세)", expanded=False):
+                    st.write(detailed.get("risks_detailed", ""))
+                with st.expander("밸류에이션 (상세)", expanded=False):
+                    st.write(detailed.get("valuation_detailed", ""))
+                with st.expander("뉴스/이슈 (상세)", expanded=False):
+                    st.write(detailed.get("news_detailed", ""))
+            else:
+                st.warning("상세 보고서 생성에 실패했습니다. 다시 시도해주세요.")
 
         st.divider()
 

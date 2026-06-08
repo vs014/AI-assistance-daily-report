@@ -197,8 +197,17 @@ JSON 형식으로만 반환:
 
         result_text = response.choices[0].message.content.strip()
         result_text = result_text.replace("```json", "").replace("```", "").strip()
-        detailed = json.loads(result_text)
-        return detailed if isinstance(detailed, dict) else {}
+
+        try:
+            detailed = json.loads(result_text)
+            if not isinstance(detailed, dict):
+                print(f"상세 보고서 JSON 파싱 결과가 dict가 아님: {type(detailed)}")
+                return {}
+            return detailed
+        except json.JSONDecodeError as je:
+            print(f"상세 보고서 JSON 파싱 실패: {je}")
+            print(f"응답 텍스트: {result_text[:200]}")
+            return {}
     except Exception as e:
         print(f"상세 보고서 생성 실패: {e}")
         return {}
