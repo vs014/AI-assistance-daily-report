@@ -25,6 +25,14 @@ from src.macro_analyzer import (
     analyze_macro, parse_dashboard, generate_macro_mermaid,
     get_indicator_description,
 )
+from src.company_analyzer import (
+    analyze_company, get_related_tags, generate_detailed_report,
+)
+from src.company_storage import (
+    load_company_cache, save_company_cache, delete_company_cache,
+    get_cached_company, load_company_watchlist, save_company_watchlist,
+    add_company_to_watchlist, remove_company_from_watchlist,
+)
 
 st.set_page_config(
     page_title="개인 경제 AI 비서",
@@ -358,10 +366,11 @@ with st.sidebar:
         st.caption(f"📨 발송 대상: {len(config['emails'])}명" if config.get('emails') else "📨 발송 대상: 0명")
 
 # ── 탭 구성 (4개) ────────────────────────────────────────────────────────────
-tab_generate, tab_macro, tab_dict = st.tabs([
+tab_generate, tab_macro, tab_dict, tab_company = st.tabs([
     "📰 리포트 생성",
     "📊 Macro 대시보드",
     "📚 지표 사전",
+    "🏢 기업 분석",
 ])
 
 # ════════════════════════════════════════════════════════════════════════════════
@@ -708,4 +717,158 @@ with tab_dict:
 
             if f"dict_desc_{ind['id']}" in st.session_state:
                 st.markdown(st.session_state[f"dict_desc_{ind['id']}"])
+
+# ════════════════════════════════════════════════════════════════════════════════
+# 탭 4: 기업 분석 (신규)
+# ════════════════════════════════════════════════════════════════════════════════
+with tab_company:
+    st.subheader("🏢 기업 분석")
+    st.caption("기업명 또는 티커를 입력하면 AI가 투자 판단용 평가서를 생성합니다.")
+
+    col_input, col_btn = st.columns([4, 1])
+    with col_input:
+        company_input = st.text_input(
+            "기업명 또는 티커 입력",
+            placeholder="예: Apple, AAPL, 삼성전자, 005930",
+            key="company_input",
+        )
+    with col_btn:
+        analyze_btn = st.button("분석", key="analyze_company", type="primary", use_container_width=True)
+
+    if analyze_btn and company_input.strip():
+        with st.spinner("기업 분석 중..."):
+            try:
+                company_data = analyze_company(company_input.strip())
+                if company_data:
+                    ticker = company_data.get("ticker", "").upper()
+                    save_company_cache(ticker, company_data)
+                    st.session_state["company_data"] = company_data
+                    st.session_state["company_ticker"] = ticker
+                    st.success("기업 분석 완료!")
+                else:
+                    st.error("기업 정보를 찾을 수 없습니다. 다시 시도해주세요.")
+            except Exception as e:
+                st.error(f"분석 실패: {e}")
+
+    # 캐시 관리 expander
+    with st.expander("📋 캐시 관리"):
+        cache = load_company_cache()
+        if cache:
+            st.write(f"저장된 기업: {len(cache)}개")
+            for ticker, data in cache.items():
+                col_info, col_del = st.columns([4, 1])
+                with col_info:
+                    st.caption(f"**{data.get('company_name', ticker)}** ({ticker}) - {data.get('retrieved_at', '미정')}")
+                with col_del:
+                    if st.button("삭제", key=f"del_{ticker}"):
+                        delete_company_cache(ticker)
+                        st.rerun()
+        else:
+            st.info("저장된 기업이 없습니다.")
+
+    st.divider()
+
+    # 분석 결과 표시
+    if "company_data" in st.session_state:
+        company_data = st.session_state["company_data"]
+        ticker = st.session_state.get("company_ticker", "")
+
+        # 캐시 표시
+        st.caption(f"✅ 캐시에서 로드됨 (작성: {company_data.get('retrieved_at', '미정')})")
+
+        # 기본 평가서 (A4 1페이지)
+        st.markdown("### 📄 기업 평가서")
+
+        # 레이아웃
+        col1, col2 = st.columns([3, 1])
+        with col1:
+            st.markdown(f"**{company_data.get('company_name', 'N/A')}** ({ticker})")
+            st.caption(f"상장: {company_data.get('market', 'N/A')}")
+        with col2:
+            # Word/PDF 저장 버튼
+            if st.button("📥 Word 저장", key="save_word"):
+                st.info("Word 저장 기능은 Phase 4에서 추가됩니다.")
+            if st.button("📥 PDF 저장", key="save_pdf"):
+                st.info("PDF 저장 기능은 Phase 4에서 추가됩니다.")
+
+        st.divider()
+
+        # 평가서 내용
+        st.markdown("#### 기업 개요")
+        st.write(company_data.get("overview", ""))
+
+        st.markdown("#### 사업 현황")
+        st.write(company_data.get("business", ""))
+
+        st.markdown("#### 재무 요약")
+        st.write(company_data.get("financials", ""))
+
+        st.markdown("#### 경영진 및 지배구조")
+        st.write(company_data.get("management", ""))
+
+        st.markdown("#### 투자 포인트")
+        st.write(company_data.get("investment_points", ""))
+
+        st.markdown("#### 리스크")
+        st.write(company_data.get("risks", ""))
+
+        st.markdown("#### 주가 및 밸류에이션")
+        st.write(company_data.get("valuation", ""))
+
+        st.markdown("#### 최신 뉴스/이슈")
+        st.write(company_data.get("latest_news", ""))
+
+        st.markdown("#### 요약 의견")
+        st.success(company_data.get("summary", ""))
+
+        st.divider()
+
+        # 상세 보고서 요청
+        if st.button("📖 자세한 보고서 요청하기", key="detailed_report"):
+            with st.spinner("상세 보고서 생성 중..."):
+                try:
+                    detailed = generate_detailed_report(company_data)
+                    st.session_state["detailed_report"] = detailed
+                    st.success("상세 보고서 생성 완료!")
+                except Exception as e:
+                    st.error(f"상세 보고서 생성 실패: {e}")
+
+        if "detailed_report" in st.session_state:
+            st.markdown("### 📖 상세 보고서")
+            detailed = st.session_state["detailed_report"]
+
+            with st.expander("기업 개요 (상세)", expanded=False):
+                st.write(detailed.get("overview_detailed", ""))
+            with st.expander("사업 현황 (상세)", expanded=False):
+                st.write(detailed.get("business_detailed", ""))
+            with st.expander("재무 (상세)", expanded=False):
+                st.write(detailed.get("financials_detailed", ""))
+            with st.expander("경영진 (상세)", expanded=False):
+                st.write(detailed.get("management_detailed", ""))
+            with st.expander("투자 포인트 (상세)", expanded=False):
+                st.write(detailed.get("investment_detailed", ""))
+            with st.expander("리스크 (상세)", expanded=False):
+                st.write(detailed.get("risks_detailed", ""))
+            with st.expander("밸류에이션 (상세)", expanded=False):
+                st.write(detailed.get("valuation_detailed", ""))
+            with st.expander("뉴스/이슈 (상세)", expanded=False):
+                st.write(detailed.get("news_detailed", ""))
+
+        st.divider()
+
+        # 관련 분야 태그
+        st.markdown("#### 관련 분야")
+        predefined_topics = load_topics()
+        tags = get_related_tags(company_data, predefined_topics)
+
+        if tags:
+            col_tags = st.columns(min(len(tags), 4))
+            for idx, tag in enumerate(tags[:4]):
+                with col_tags[idx % len(col_tags)]:
+                    if tag.get("is_new"):
+                        st.button(f"🆕 {tag.get('label', tag.get('id'))}", disabled=True)
+                        if st.button("➕ 추가", key=f"add_tag_{tag['id']}"):
+                            st.info("분야 추가 기능은 Phase 4에서 추가됩니다.")
+                    else:
+                        st.button(f"✓ {tag['id']}", disabled=True)
 
