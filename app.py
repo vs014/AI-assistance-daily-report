@@ -355,9 +355,120 @@ with st.sidebar:
             save_daily_config(predefined_daily_original, current_emails, custom_topic_ids=custom_daily_ids)
             st.success("✓ 분야 저장 완료!")
 
+    # 기업 리포트 메일 설정
+    st.divider()
+    st.subheader("🏢 기업 리포트 메일")
+    st.caption("매월 1일/15일에 관심 기업의 최신 이슈를 받을 수 있습니다.")
+
+    company_config = load_company_report_config()
+    company_enabled = st.checkbox(
+        "기업 리포트 메일 활성화",
+        value=company_config.get("enabled", False),
+        key="company_report_enabled",
+    )
+
+    if company_enabled:
+        col_1st, col_15th = st.columns(2)
+        with col_1st:
+            send_on_1st = st.checkbox(
+                "매월 1일 발송",
+                value=company_config.get("send_on_1st", True),
+                key="send_on_1st",
+            )
+        with col_15th:
+            send_on_15th = st.checkbox(
+                "매월 15일 발송",
+                value=company_config.get("send_on_15th", True),
+                key="send_on_15th",
+            )
+
+        # 기업 리포트 받을 이메일
+        st.write("**📧 기업 리포트 수신자 (선택):**")
+        st.caption("비워두면 위 '이메일 설정'에서 설정한 이메일로 발송됩니다.")
+
+        company_recipients = company_config.get("recipient_emails", [])
+
+        if company_recipients:
+            for i, email in enumerate(company_recipients):
+                col1, col2 = st.columns([4, 1])
+                with col1:
+                    st.caption(f"{i+1}. {email}")
+                with col2:
+                    if st.button("🗑️", key=f"remove_company_email_{i}"):
+                        company_recipients.pop(i)
+                        company_config["recipient_emails"] = company_recipients
+                        company_config["enabled"] = company_enabled
+                        company_config["send_on_1st"] = send_on_1st
+                        company_config["send_on_15th"] = send_on_15th
+                        save_company_report_config(company_config)
+                        st.rerun()
+
+        # 새 이메일 추가
+        new_company_email = st.text_input(
+            "새 이메일",
+            placeholder="company.email@example.com",
+            key="new_company_email",
+        )
+        if st.button("➕ 추가", key="add_company_email"):
+            if new_company_email and "@" in new_company_email:
+                if new_company_email not in company_recipients:
+                    company_recipients.append(new_company_email)
+                    company_config["recipient_emails"] = company_recipients
+                    company_config["enabled"] = company_enabled
+                    company_config["send_on_1st"] = send_on_1st
+                    company_config["send_on_15th"] = send_on_15th
+                    save_company_report_config(company_config)
+                    st.success(f"✓ {new_company_email} 추가됨")
+                    st.rerun()
+                else:
+                    st.warning("이미 추가된 이메일입니다.")
+            else:
+                st.error("올바른 이메일을 입력해주세요.")
+
+        # 감시 기업 목록
+        st.write("**📋 감시 기업 목록:**")
+        watchlist = load_company_watchlist()
+        if watchlist:
+            for i, company in enumerate(watchlist):
+                col1, col2 = st.columns([4, 1])
+                with col1:
+                    st.caption(f"{i+1}. {company['name']} ({company['ticker']}) - {company.get('added_at', '미정')}")
+                with col2:
+                    if st.button("🗑️", key=f"remove_watchlist_{i}"):
+                        watchlist.pop(i)
+                        save_company_watchlist(watchlist)
+                        st.rerun()
+        else:
+            st.caption("감시 중인 기업이 없습니다.")
+
+        # 새 기업 추가
+        st.write("**➕ 기업 추가:**")
+        new_company = st.text_input(
+            "기업명 또는 티커",
+            placeholder="Apple, AAPL",
+            key="new_company_watchlist",
+        )
+        col_add, col_manual = st.columns(2)
+        with col_add:
+            if st.button("➕ 추가", key="add_watchlist"):
+                if new_company.strip():
+                    # 기업 분석에서 기업명과 티커를 자동으로 추출하도록 함
+                    st.info("⚠️ 기업 분석 탭에서 먼저 기업을 분석한 후 추가해주세요.")
+                else:
+                    st.error("기업명 또는 티커를 입력해주세요.")
+
+        with col_manual:
+            if st.button("⚙️ 기업 리포트 설정 저장", key="save_company_config"):
+                company_config["enabled"] = company_enabled
+                company_config["send_on_1st"] = send_on_1st
+                company_config["send_on_15th"] = send_on_15th
+                company_config["recipient_emails"] = company_recipients
+                save_company_report_config(company_config)
+                st.success("✓ 기업 리포트 설정이 저장되었습니다.")
+
     # 현재 설정 요약
+    st.divider()
     if config:
-        st.divider()
         saved_topics = config.get("topics", [])
         saved_custom_ids = config.get("custom_topic_ids", [])
         saved_custom_labels = [ct["label"] for ct in custom_topics if ct["id"] in saved_custom_ids]
@@ -773,8 +884,23 @@ with tab_company:
         company_data = st.session_state["company_data"]
         ticker = st.session_state.get("company_ticker", "")
 
-        # 캐시 표시
-        st.caption(f"✅ 캐시에서 로드됨 (작성: {company_data.get('retrieved_at', '미정')})")
+        # 캐시 표시 및 watchlist 추가
+        col_cache, col_watchlist = st.columns([3, 1])
+        with col_cache:
+            st.caption(f"✅ 캐시에서 로드됨 (작성: {company_data.get('retrieved_at', '미정')})")
+        with col_watchlist:
+            watchlist = load_company_watchlist()
+            is_in_watchlist = any(c["ticker"].upper() == ticker.upper() for c in watchlist)
+            if is_in_watchlist:
+                if st.button("❌ Watchlist에서 제거", key="remove_watchlist_company"):
+                    remove_company_from_watchlist(ticker)
+                    st.success(f"✓ {company_data.get('company_name')} ({ticker})을 watchlist에서 제거했습니다.")
+                    st.rerun()
+            else:
+                if st.button("⭐ Watchlist에 추가", key="add_watchlist_company"):
+                    add_company_to_watchlist(company_data.get("company_name", ticker), ticker)
+                    st.success(f"✓ {company_data.get('company_name')} ({ticker})을 watchlist에 추가했습니다.")
+                    st.rerun()
 
         # 기본 평가서 (A4 1페이지)
         st.markdown("### 📄 기업 평가서")

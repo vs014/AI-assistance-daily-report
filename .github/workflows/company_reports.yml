@@ -1,0 +1,31 @@
+name: Company Report Email
+
+on:
+  schedule:
+    - cron: "0 22 1 * *"   # 매월 1일 KST 07:00 (UTC 22:00)
+    - cron: "0 22 15 * *"  # 매월 15일 KST 07:00 (UTC 22:00)
+  workflow_dispatch:        # 수동 테스트 실행 가능
+
+jobs:
+  send-reports:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v5
+
+      - uses: actions/setup-python@v6
+        with:
+          python-version: "3.11"
+
+      - name: Install system dependencies (Korean fonts)
+        run: sudo apt-get update && sudo apt-get install -y fonts-noto-cjk
+
+      - name: Install Python dependencies
+        run: pip install -q -r requirements.txt
+
+      - name: Send company reports
+        run: python scripts/send_company_reports.py
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
