@@ -29,8 +29,10 @@ def _load_trusted_domains() -> list[str]:
         with open(sources_path, encoding="utf-8") as f:
             data = yaml.safe_load(f)
         trusted = data.get("trusted_free", {})
-        domains = [s["domain"] for s in trusted.get("global", [])]
-        domains += [s["domain"] for s in trusted.get("korean", [])]
+        domains = []
+        for section in trusted.values():
+            if isinstance(section, list):
+                domains += [s["domain"] for s in section]
         return domains
     except Exception as e:
         print(f"신뢰 도메인 로드 실패: {e}")
@@ -85,6 +87,34 @@ def _build_search_prompt(topic: dict, monthly_context: str = "") -> str:
 핵심 기사 3~5개만 선별하여 반환해주세요."""
 
 
+def _validate_article(article: dict, trusted_domains: list[str]) -> tuple[bool, str]:
+    """기사 유효성 검사. (is_valid, warning_msg)를 반환."""
+    title = article.get("title", "").strip()
+    url = article.get("url", "").strip()
+    source = article.get("source", "").strip()
+    published_date = article.get("published_date", "").strip()
+
+    if not title:
+        return False, "제목 없음"
+    if not url or url == "#":
+        return False, "URL 누락/유효하지 않음"
+    if not source:
+        return False, "출처 누락"
+    if not published_date:
+        return False, "발행일 누락"
+
+    if trusted_domains:
+        domain_found = False
+        for domain in trusted_domains:
+            if domain.lower() in url.lower():
+                domain_found = True
+                break
+        if not domain_found:
+            return True, f"신뢰 도메인 미포함: {url}"
+
+    return True, ""
+
+
 def search_news_for_topic(topic: dict, monthly_context: str = "") -> list[dict]:
     """단일 분야의 최신 뉴스를 웹 검색으로 수집."""
     try:
@@ -108,7 +138,19 @@ def search_news_for_topic(topic: dict, monthly_context: str = "") -> list[dict]:
         result_text = result_text.strip()
 
         articles = json.loads(result_text)
-        return articles if isinstance(articles, list) else []
+        if not isinstance(articles, list):
+            return []
+
+        trusted_domains = _load_trusted_domains()
+        validated_articles = []
+        for article in articles:
+            is_valid, warning = _validate_article(article, trusted_domains)
+            if is_valid:
+                validated_articles.append(article)
+            elif warning:
+                print(f"⚠️ {topic['label']} 기사 검증 경고: {warning}")
+
+        return validated_articles
     except Exception as e:
         print(f"뉴스 검색 실패 ({topic['label']}): {e}")
         return []

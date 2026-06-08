@@ -443,7 +443,17 @@ with tab_generate:
         result = st.session_state["news_result"]
 
         if not result or all(len(articles) == 0 for articles in result.values()):
-            st.info("검색된 뉴스가 없습니다.")
+            st.warning(
+                "⚠️ 검색된 뉴스가 없습니다.\n\n"
+                "원인:\n"
+                "- 신뢰할 수 있는 뉴스 소스(Reuters, CNBC, 한경 등)에 해당 분야의 최신 기사가 없을 수 있습니다.\n"
+                "- AI 검색 모델이 신뢰 도메인 내에서 관련 기사를 찾지 못했습니다.\n"
+                "- 검색 키워드가 너무 구체적일 수 있습니다.\n\n"
+                "해결:\n"
+                "- 다른 분야로 검색해보세요.\n"
+                "- 캐시를 초기화하고 다시 검색하세요.\n"
+                "- 관심 분야의 키워드를 변경해보세요."
+            )
         else:
             # 오늘의 브리핑 표시
             if st.session_state.get("news_briefing"):
