@@ -2,12 +2,15 @@
   "topics": [
     "AI / 반도체",
     "데이터센터 / 전력 인프라",
-    "원전 / SMR"
+    "원전 / SMR",
+    "한국 주식시장",
+    "미국 주식시장"
   ],
   "emails": [
     "dydgus370@gmail.com",
     "2536253@naver.com",
     "yonghyeon.hwang@ligdna.com"
   ],
-  "updated_at": "2026-06-03"
+  "custom_topic_ids": [],
+  "updated_at": "2026-06-08"
 }
