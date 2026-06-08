@@ -90,7 +90,7 @@ JSON 형식으로만 반환 (다른 텍스트 없음):
         return {}
 
 
-def get_related_tags(company_data: dict, predefined_topics: list[dict]) -> list[dict]:
+def get_related_tags(company_data: dict, predefined_topics: list[dict], custom_topics: list[dict] = None) -> list[dict]:
     """
     기업 분석 데이터에서 관련 분야 태그를 추출.
 
@@ -102,6 +102,13 @@ def get_related_tags(company_data: dict, predefined_topics: list[dict]) -> list[
     if not company_data:
         return []
 
+    if custom_topics is None:
+        custom_topics = []
+
+    # 기존 분야 (기본 + 커스텀)
+    all_existing_topics = predefined_topics + custom_topics
+    existing_topic_info = [{"id": t["id"], "label": t["label"]} for t in all_existing_topics]
+
     prompt = f"""당신은 기업 분석 전문가입니다. 다음 기업 정보에서 관련된 투자 분야 태그를 추출해주세요.
 
 기업 정보:
@@ -109,16 +116,18 @@ def get_related_tags(company_data: dict, predefined_topics: list[dict]) -> list[
 주요 사업: {company_data.get('business', '')}
 산업: {company_data.get('investment_points', '')}
 
-다음은 기존 관심 분야 카테고리입니다:
-{json.dumps([{"id": t["id"], "label": t["label"]} for t in predefined_topics], ensure_ascii=False, indent=2)}
+다음은 기존 관심 분야 카테고리입니다 (기본 분야 + 커스텀 분야):
+{json.dumps(existing_topic_info, ensure_ascii=False, indent=2)}
 
 이 기업과 가장 관련된 기존 분야 ID를 최대 3개 추출해주세요.
 기존 분야에 없는 새로운 분야가 있으면 제안해주세요.
 
+**중요: 새로운 분야의 label은 반드시 한국어로 작성해주세요.**
+
 JSON 배열 형식으로만 반환 (다른 텍스트 없음):
 [
   {{"id": "existing_topic_id", "is_new": false}},
-  {{"id": "new_topic_id", "label": "새로운 분야", "is_new": true}}
+  {{"id": "new_topic_id", "label": "새로운 분야 (한국어)", "is_new": true}}
 ]
 """
 

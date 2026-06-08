@@ -1009,7 +1009,8 @@ with tab_company:
         """, unsafe_allow_html=True)
 
         predefined_topics = load_topics()
-        tags = get_related_tags(company_data, predefined_topics)
+        custom_topics_list = load_custom_topics()
+        tags = get_related_tags(company_data, predefined_topics, custom_topics_list)
 
         if tags:
             for tag in tags[:4]:
