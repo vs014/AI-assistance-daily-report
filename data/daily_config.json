@@ -17,5 +17,14 @@
     "custom_클라우드",
     "custom_데이터센터"
   ],
-  "updated_at": "2026-06-08"
+  "updated_at": "2026-06-08",
+  "company_report_config": {
+    "enabled": true,
+    "send_on_1st": true,
+    "send_on_15th": true,
+    "recipient_emails": [
+      "yonghyeon.hwang@ligdna.com",
+      "2536253@naver.com"
+    ]
+  }
 }
