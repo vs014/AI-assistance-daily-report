@@ -466,7 +466,12 @@ with st.sidebar:
                 company_config["send_on_15th"] = send_on_15th
                 company_config["recipient_emails"] = company_recipients
                 save_company_report_config(company_config)
-                st.success("✓ 기업 리포트 설정이 저장되었습니다.")
+
+                # GitHub에 자동 푸시
+                if push_config_to_github():
+                    st.success("✓ 기업 리포트 설정이 저장되고 GitHub에 동기화되었습니다!")
+                else:
+                    st.warning("✓ 기업 리포트 설정이 저장되었습니다. (GitHub 동기화 실패 — 수동으로 push해주세요)")
 
     # 현재 설정 요약
     st.divider()
@@ -901,7 +906,13 @@ with tab_company:
             else:
                 if st.button("⭐ Watchlist에 추가", key="add_watchlist_company"):
                     add_company_to_watchlist(company_data.get("company_name", ticker), ticker)
-                    st.success(f"✓ {company_data.get('company_name')} ({ticker})을 watchlist에 추가했습니다.")
+
+                    # GitHub에 자동 푸시
+                    if push_config_to_github():
+                        st.success(f"✓ {company_data.get('company_name')} ({ticker})을 watchlist에 추가하고 GitHub에 동기화했습니다!")
+                    else:
+                        st.success(f"✓ {company_data.get('company_name')} ({ticker})을 watchlist에 추가했습니다.")
+                        st.warning("GitHub 동기화 실패 — 수동으로 push해주세요.")
                     st.rerun()
 
         # 기본 평가서 (A4 1페이지)
@@ -1053,6 +1064,11 @@ with tab_company:
                                 "keywords": [tag.get("label", tag["id"])],
                             }
                             add_custom_topics([new_topic])
-                            st.success(f"✓ '{tag.get('label', tag['id'])}' 분야가 관심 분야에 추가되었습니다!")
-                            st.info("사이드바를 새로고침하면 새로운 분야를 확인할 수 있습니다.")
+
+                            # GitHub에 자동 푸시
+                            if push_config_to_github():
+                                st.success(f"✓ '{tag.get('label', tag['id'])}' 분야가 관심 분야에 추가되고 GitHub에 동기화되었습니다!")
+                            else:
+                                st.success(f"✓ '{tag.get('label', tag['id'])}' 분야가 관심 분야에 추가되었습니다!")
+                                st.warning("GitHub 동기화 실패 — 수동으로 push해주세요.")
 
