@@ -11,6 +11,8 @@
     "2536253@naver.com",
     "yonghyeon.hwang@ligdna.com"
   ],
-  "custom_topic_ids": [],
+  "custom_topic_ids": [
+    "custom_AI_인프라"
+  ],
   "updated_at": "2026-06-08"
 }
