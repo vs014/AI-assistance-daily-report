@@ -200,7 +200,7 @@ def generate_detailed_report(company_data: dict) -> dict:
             response = client.chat.completions.create(
                 model=os.getenv("OPENAI_MODEL", "gpt-4o-mini"),
                 messages=[{"role": "user", "content": prompt}],
-                max_completion_tokens=256,
+                max_completion_tokens=600,
             )
 
             detailed_text = response.choices[0].message.content.strip()
