@@ -421,6 +421,14 @@ with tab_generate:
 
                     st.session_state["news_result"] = result
                     save_to_monthly_archive(result)
+
+                    # 월간 컨텍스트 확인
+                    from datetime import datetime, timedelta
+                    from src.storage import load_monthly_context
+                    last_month = (datetime.today().replace(day=1) - timedelta(days=1)).strftime("%Y-%m")
+                    monthly_context = load_monthly_context(last_month)
+                    st.session_state["has_monthly_context"] = bool(monthly_context)
+
                     st.success("뉴스 검색 완료!")
                 except Exception as e:
                     st.error(f"뉴스 검색 실패: {e}")
@@ -455,6 +463,12 @@ with tab_generate:
                 "- 관심 분야의 키워드를 변경해보세요."
             )
         else:
+            # 월간 컨텍스트 반영 여부 표시
+            if st.session_state.get("has_monthly_context"):
+                st.caption("✅ 지난달 분석 데이터를 반영하여 기사를 검색했습니다.")
+            else:
+                st.caption("ℹ️ 지난달 데이터가 없어 기본 검색으로 진행했습니다. (신규 사용자 또는 첫 달)")
+
             # 오늘의 브리핑 표시
             if st.session_state.get("news_briefing"):
                 st.markdown("### 💡 오늘의 뉴스 브리핑")
