@@ -49,7 +49,9 @@ def _build_email_html(briefing: str, collected: dict[str, list[dict]]) -> str:
             articles_md += f"### {topic_label} — {len(articles)}건\n\n"
             for i, art in enumerate(articles, 1):
                 articles_md += f"{i}. **[{art.get('title', '제목 없음')}]({art.get('url', '#')})**\n"
-                articles_md += f"   출처: {art.get('source', '출처 미상')}\n"
+                _date = art.get('published_date', '')
+                _date_str = f" · {_date}" if _date else ""
+                articles_md += f"   출처: {art.get('source', '출처 미상')}{_date_str}\n"
                 articles_md += f"   {art.get('summary', '요약 없음')}\n\n"
 
     # HTML로 변환

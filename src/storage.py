@@ -13,6 +13,7 @@ _CUSTOM_TOPICS_FILE = _BASE / "data" / "custom_topics.json"
 _PREDEFINED_OVERRIDES_FILE = _BASE / "data" / "predefined_overrides.json"
 _MONTHLY_ARCHIVE_DIR = _BASE / "data" / "monthly_archive"
 _MONTHLY_CONTEXT_DIR = _BASE / "data" / "monthly_context"
+_SELECTED_TOPICS_FILE = _BASE / "data" / "selected_topics.json"
 
 
 def _today() -> str:
@@ -279,6 +280,7 @@ def save_to_monthly_archive(collected: dict[str, list[dict]]) -> None:
                 "title": a.get("title", ""),
                 "summary": a.get("summary", ""),
                 "source": a.get("source", ""),
+                "published_date": a.get("published_date", ""),
             }
             for a in articles
         ]
@@ -325,6 +327,20 @@ def cleanup_old_monthly_data() -> None:
         for f in _MONTHLY_ARCHIVE_DIR.glob("*.json"):
             if f.stem not in keep_months:
                 f.unlink()
+
+
+def load_selected_topic_ids() -> list[str]:
+    if _SELECTED_TOPICS_FILE.exists():
+        return json.loads(_SELECTED_TOPICS_FILE.read_text(encoding="utf-8")).get("selected", [])
+    return []
+
+
+def save_selected_topic_ids(ids: list[str]) -> None:
+    _SELECTED_TOPICS_FILE.parent.mkdir(parents=True, exist_ok=True)
+    _SELECTED_TOPICS_FILE.write_text(
+        json.dumps({"selected": ids}, ensure_ascii=False, indent=2),
+        encoding="utf-8",
+    )
 
 
 def push_config_to_github() -> bool:

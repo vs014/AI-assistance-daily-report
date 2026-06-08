@@ -12,6 +12,7 @@ from src.storage import (
     save_to_monthly_archive,
     load_predefined_overrides, save_predefined_override, delete_predefined_override,
     load_hidden_predefined, hide_predefined_topic, unhide_predefined_topic,
+    load_selected_topic_ids, save_selected_topic_ids,
 )
 from src.news_searcher import (
     collect_all_news, generate_daily_briefing, extract_topics_from_query,
@@ -98,10 +99,17 @@ custom_topic_labels = [ct["label"] for ct in custom_topics]
 all_options = predefined_display_labels + custom_topic_labels
 all_topics = get_topic_labels()  # 하위 호환용 (original labels)
 
-# 첫 실행 시 visible 기본 분야 3개 선택
+# 첫 실행 시 저장된 선택 복원, 없으면 기본 3개
 if "topics_initialized" not in st.session_state:
-    for _t in visible_topics_data[:3]:
-        st.session_state[f"chk_{_t['id']}"] = True
+    _saved_ids = set(load_selected_topic_ids())
+    if _saved_ids:
+        for _t in visible_topics_data:
+            st.session_state[f"chk_{_t['id']}"] = _t["id"] in _saved_ids
+        for _ct in custom_topics:
+            st.session_state[f"chk_{_ct['id']}"] = _ct["id"] in _saved_ids
+    else:
+        for _t in visible_topics_data[:3]:
+            st.session_state[f"chk_{_t['id']}"] = True
     st.session_state["topics_initialized"] = True
 
 with st.sidebar:
@@ -207,12 +215,17 @@ with st.sidebar:
 
     # 체크박스 상태로부터 selected_topics 빌드
     selected_topics: list[str] = []
+    _current_ids: list[str] = []
     for _t in visible_topics_data:
         if st.session_state.get(f"chk_{_t['id']}", False):
             selected_topics.append(predefined_overrides.get(_t["id"], _t["label"]))
+            _current_ids.append(_t["id"])
     for ct in custom_topics:
         if st.session_state.get(f"chk_{ct['id']}", False):
             selected_topics.append(ct["label"])
+            _current_ids.append(ct["id"])
+    if set(_current_ids) != set(load_selected_topic_ids()):
+        save_selected_topic_ids(_current_ids)
 
     # 숨긴 기본 분야 복원 UI
     if hidden_ids:
@@ -225,12 +238,6 @@ with st.sidebar:
                 if _col_restore.button("↩️", key=f"restore_{_t['id']}", help="복원"):
                     unhide_predefined_topic(_t["id"])
                     st.rerun()
-
-    report_style = st.radio(
-        "보고서 스타일",
-        options=["보고서형", "블로그형"],
-        index=0,
-    )
 
     st.divider()
     st.subheader("📁 저장된 리포트")
@@ -334,11 +341,10 @@ with st.sidebar:
         st.caption(f"📨 발송 대상: {len(config['emails'])}명" if config.get('emails') else "📨 발송 대상: 0명")
 
 # ── 탭 구성 (4개) ────────────────────────────────────────────────────────────
-tab_generate, tab_macro, tab_dict, tab_preview = st.tabs([
+tab_generate, tab_macro, tab_dict = st.tabs([
     "📰 리포트 생성",
     "📊 Macro 대시보드",
     "📚 지표 사전",
-    "🖥️ 미리보기",
 ])
 
 # ════════════════════════════════════════════════════════════════════════════════
@@ -437,7 +443,9 @@ with tab_generate:
                     else:
                         for i, art in enumerate(articles, 1):
                             st.markdown(f"{i}. **[{art.get('title', '제목 없음')}]({art.get('url', '#')})**")
-                            st.caption(f"출처: {art.get('source', '출처 미상')}")
+                            _date = art.get('published_date', '')
+                            _date_str = f" · {_date}" if _date else ""
+                            st.caption(f"출처: {art.get('source', '출처 미상')}{_date_str}")
                             st.write(art.get('summary', '요약 없음'))
                             st.divider()
 
@@ -660,32 +668,3 @@ with tab_dict:
             if f"dict_desc_{ind['id']}" in st.session_state:
                 st.markdown(st.session_state[f"dict_desc_{ind['id']}"])
 
-# ════════════════════════════════════════════════════════════════════════════════
-# 탭 4: 미리보기 (Macro 보고서만)
-# ════════════════════════════════════════════════════════════════════════════════
-with tab_preview:
-    st.subheader("🖥️ Macro 보고서 미리보기")
-    st.caption("Macro 대시보드 탭에서 분석한 보고서를 HTML로 미리볼 수 있습니다.")
-
-    if "macro_html" in st.session_state:
-        col_save, col_dl = st.columns(2)
-        with col_save:
-            if st.button("💾 HTML 파일로 저장", key="save_html_preview"):
-                path = save_macro_report(st.session_state["macro_html"], fmt="html")
-                st.success(f"저장 완료: {path}")
-        with col_dl:
-            st.download_button(
-                label="⬇️ HTML 다운로드",
-                data=st.session_state["macro_html"].encode("utf-8"),
-                file_name=f"{date.today().isoformat()}_macro_report.html",
-                mime="text/html",
-                key="dl_preview",
-            )
-
-        st.components.v1.html(
-            st.session_state["macro_html"],
-            height=900,
-            scrolling=True,
-        )
-    else:
-        st.info("📊 Macro 대시보드 탭에서 먼저 분석을 실행해주세요.")
