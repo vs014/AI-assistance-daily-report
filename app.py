@@ -13,6 +13,7 @@ from src.storage import (
     load_predefined_overrides, save_predefined_override, delete_predefined_override,
     load_hidden_predefined, hide_predefined_topic, unhide_predefined_topic,
     load_selected_topic_ids, save_selected_topic_ids,
+    update_daily_config_from_selection,
 )
 from src.news_searcher import (
     collect_all_news, generate_daily_briefing, extract_topics_from_query,
@@ -215,17 +216,33 @@ with st.sidebar:
 
     # 체크박스 상태로부터 selected_topics 빌드
     selected_topics: list[str] = []
-    _current_ids: list[str] = []
+    _current_predefined_ids: list[str] = []
+    _current_custom_ids: list[str] = []
     for _t in visible_topics_data:
         if st.session_state.get(f"chk_{_t['id']}", False):
             selected_topics.append(predefined_overrides.get(_t["id"], _t["label"]))
-            _current_ids.append(_t["id"])
+            _current_predefined_ids.append(_t["id"])
     for ct in custom_topics:
         if st.session_state.get(f"chk_{ct['id']}", False):
             selected_topics.append(ct["label"])
-            _current_ids.append(ct["id"])
+            _current_custom_ids.append(ct["id"])
+
+    _current_ids = _current_predefined_ids + _current_custom_ids
     if set(_current_ids) != set(load_selected_topic_ids()):
         save_selected_topic_ids(_current_ids)
+        update_daily_config_from_selection(
+            _current_predefined_ids,
+            _current_custom_ids,
+            visible_topics_data,
+            custom_topics,
+        )
+        try:
+            if push_config_to_github():
+                st.toast("✓ 설정이 GitHub에 저장되었습니다.", icon="✅")
+            else:
+                st.toast("⚠️ GitHub 저장 실패 (오프라인일 수 있음)", icon="⚠️")
+        except Exception as e:
+            st.toast(f"⚠️ 오류: {str(e)}", icon="⚠️")
 
     # 숨긴 기본 분야 복원 UI
     if hidden_ids:

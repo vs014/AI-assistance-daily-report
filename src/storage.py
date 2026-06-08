@@ -343,6 +343,33 @@ def save_selected_topic_ids(ids: list[str]) -> None:
     )
 
 
+def update_daily_config_from_selection(
+    selected_predefined_ids: list[str],
+    selected_custom_ids: list[str],
+    predefined_topics: list[dict],
+    custom_topics: list[dict],
+) -> None:
+    """선택된 분야(ID)를 daily_config.json으로 변환하여 저장."""
+    predefined_overrides = load_predefined_overrides()
+
+    topics = []
+    for pid in selected_predefined_ids:
+        for pt in predefined_topics:
+            if pt["id"] == pid:
+                label = predefined_overrides.get(pid, pt["label"])
+                topics.append(label)
+                break
+
+    custom_topic_ids = []
+    for cid in selected_custom_ids:
+        for ct in custom_topics:
+            if ct["id"] == cid:
+                custom_topic_ids.append(cid)
+                break
+
+    save_daily_config(topics, load_daily_config().get("emails", []), custom_topic_ids)
+
+
 def push_config_to_github() -> bool:
     """daily_config.json을 GitHub에 자동으로 push한다."""
     import subprocess
