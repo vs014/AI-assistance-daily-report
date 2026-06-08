@@ -988,16 +988,40 @@ with tab_company:
 
         # 관련 분야 태그
         st.markdown("#### 관련 분야")
+        st.markdown("""
+        <style>
+        .tag-new {
+            display: inline-block;
+            background: #ff4444;
+            color: white;
+            padding: 4px 8px;
+            border-radius: 4px;
+            margin-right: 4px;
+            font-weight: bold;
+            font-size: 12px;
+            animation: blink 1s infinite;
+        }
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.5; }
+        }
+        </style>
+        """, unsafe_allow_html=True)
+
         predefined_topics = load_topics()
         tags = get_related_tags(company_data, predefined_topics)
 
         if tags:
-            col_tags = st.columns(min(len(tags), 4))
-            for idx, tag in enumerate(tags[:4]):
-                with col_tags[idx % len(col_tags)]:
+            for tag in tags[:4]:
+                col_label, col_btn = st.columns([3, 1])
+                with col_label:
                     if tag.get("is_new"):
-                        st.button(f"🆕 {tag.get('label', tag.get('id'))}", disabled=True)
-                        if st.button("➕ 추가", key=f"add_tag_{tag['id']}"):
+                        st.markdown(f"<span class='tag-new'>N</span> {tag.get('label', tag.get('id'))}", unsafe_allow_html=True)
+                    else:
+                        st.markdown(f"<span style='color: black;'>{tag['id']}</span>", unsafe_allow_html=True)
+                with col_btn:
+                    if tag.get("is_new"):
+                        if st.button("➕", key=f"add_tag_{tag['id']}", help="관심 분야에 추가"):
                             # 새 분야를 커스텀 토픽으로 추가
                             new_topic = {
                                 "id": tag["id"],
@@ -1006,8 +1030,5 @@ with tab_company:
                             }
                             add_custom_topics([new_topic])
                             st.success(f"✓ '{tag.get('label', tag['id'])}' 분야가 관심 분야에 추가되었습니다!")
-                            st.info("사이드바에서 새로운 분야를 확인할 수 있습니다.")
-                            st.rerun()
-                    else:
-                        st.button(f"✓ {tag['id']}", disabled=True)
+                            st.info("사이드바를 새로고침하면 새로운 분야를 확인할 수 있습니다.")
 
