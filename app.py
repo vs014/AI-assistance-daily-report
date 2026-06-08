@@ -929,7 +929,7 @@ with tab_company:
         st.write(company_data.get("business", ""))
 
         st.markdown("#### 재무 요약")
-        st.write(company_data.get("financials", ""))
+        st.markdown(company_data.get("financials", ""))
 
         st.markdown("#### 경영진 및 지배구조")
         st.write(company_data.get("management", ""))
@@ -941,7 +941,7 @@ with tab_company:
         st.write(company_data.get("risks", ""))
 
         st.markdown("#### 주가 및 밸류에이션")
-        st.write(company_data.get("valuation", ""))
+        st.markdown(company_data.get("valuation", ""))
 
         st.markdown("#### 최신 뉴스/이슈")
         st.write(company_data.get("latest_news", ""))
