@@ -152,20 +152,26 @@ def search_news_for_topic(topic: dict, monthly_context: str = "") -> list[dict]:
 
         return validated_articles
     except Exception as e:
-        print(f"뉴스 검색 실패 ({topic['label']}): {e}")
+        error_msg = str(e)
+        print(f"뉴스 검색 실패 ({topic['label']}): {error_msg[:200]}")
+        import traceback
+        traceback.print_exc()
         return []
 
 
 def collect_all_news(topic_labels: list[str]) -> dict[str, list[dict]]:
     """선택된 모든 분야의 뉴스를 수집 (캐시 적중 시 캐시 사용)."""
     if not topic_labels:
+        print(f"경고: topic_labels가 비어있습니다: {topic_labels}")
         return {}
 
     cache_key = _build_cache_key(topic_labels)
+    print(f"캐시 키: {cache_key}")
 
     # 캐시 확인
     cached = get_news_cache(cache_key)
     if cached:
+        print(f"캐시 적중: {sum(len(v) for v in cached.values())}개 기사")
         return cached
 
     # 지난달 컨텍스트 로드
@@ -175,11 +181,13 @@ def collect_all_news(topic_labels: list[str]) -> dict[str, list[dict]]:
 
     # 웹 검색 수행
     topics = get_selected_topics(topic_labels)
+    print(f"수집할 토픽: {[t['label'] for t in topics]}")
     result = {}
 
     for topic in topics:
         articles = search_news_for_topic(topic, monthly_context)
         result[topic["label"]] = articles
+        print(f"  {topic['label']}: {len(articles)}개 기사")
 
     # 캐시 저장
     set_news_cache(cache_key, result)

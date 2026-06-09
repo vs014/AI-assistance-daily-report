@@ -198,10 +198,21 @@ def main():
 
     # 뉴스 수집
     print(f"\n🔍 뉴스 수집 중...")
-    collected = collect_all_news(topics) if topics else {}
-    for ct in custom_for_email:
-        collected[ct["label"]] = search_news_for_topic(ct)
-    print(f"  ✓ {sum(len(arts) for arts in collected.values())}개 기사 수집")
+    try:
+        collected = collect_all_news(topics) if topics else {}
+        for ct in custom_for_email:
+            collected[ct["label"]] = search_news_for_topic(ct)
+        total_articles = sum(len(arts) for arts in collected.values())
+        print(f"  ✓ {total_articles}개 기사 수집")
+        if total_articles == 0:
+            print("  ⚠️ 경고: 수집된 기사가 없습니다!")
+            print(f"     Topics: {topics}")
+            print(f"     Custom topics: {[ct['label'] for ct in custom_for_email]}")
+    except Exception as e:
+        print(f"  ✗ 뉴스 수집 실패: {e}")
+        import traceback
+        traceback.print_exc()
+        raise
 
     # 월간 아카이브 저장
     print(f"\n📁 월간 아카이브 저장 중...")

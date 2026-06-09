@@ -3,6 +3,11 @@
     "ai_semiconductor",
     "datacenter_power",
     "nuclear_smr",
-    "us_stock"
+    "rate_fx_inflation",
+    "korean_stock",
+    "us_stock",
+    "custom_AI_인프라",
+    "custom_클라우드",
+    "custom_데이터센터"
   ]
 }

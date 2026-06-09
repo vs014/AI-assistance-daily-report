@@ -21,6 +21,28 @@ jobs:
       - name: Install Python dependencies
         run: pip install -q -r requirements.txt
 
+      - name: Debug environment
+        run: |
+          echo "Python version:"
+          python --version
+          echo "Current working directory:"
+          pwd
+          echo "Environment variables check:"
+          [ -z "$OPENAI_API_KEY" ] && echo "ERROR: OPENAI_API_KEY not set" || echo "OK: OPENAI_API_KEY is set"
+          [ -z "$OPENAI_MODEL" ] && echo "ERROR: OPENAI_MODEL not set" || echo "OK: OPENAI_MODEL=$OPENAI_MODEL"
+          [ -z "$SEARCH_MODEL" ] && echo "ERROR: SEARCH_MODEL not set" || echo "OK: SEARCH_MODEL=$SEARCH_MODEL"
+          [ -z "$EMAIL_USER" ] && echo "ERROR: EMAIL_USER not set" || echo "OK: EMAIL_USER=$EMAIL_USER"
+          echo "Daily config:"
+          [ -f data/daily_config.json ] && cat data/daily_config.json || echo "daily_config.json not found"
+        env:
+          OPENAI_API_KEY: ${{ secrets.OPENAI_API_KEY }}
+          OPENAI_MODEL: ${{ secrets.OPENAI_MODEL }}
+          SEARCH_MODEL: ${{ secrets.SEARCH_MODEL }}
+          EMAIL_USER: ${{ secrets.EMAIL_USER }}
+          EMAIL_APP_PASSWORD: ${{ secrets.EMAIL_APP_PASSWORD }}
+          DAILY_TOPICS: ${{ secrets.DAILY_TOPICS }}
+          EMAIL_RECIPIENT: ${{ secrets.EMAIL_RECIPIENT }}
+
       - name: Send daily news email
         run: python scripts/send_daily_email.py
         env:

@@ -130,5 +130,573 @@
         "source": "S&P Global"
       }
     ]
+  },
+  "news_ai_semiconductor_2026-06-05": {
+    "AI / 반도체": [
+      {
+        "title": "최근 24~48시간 내 지정 매체의 AI/반도체 기사 확인 불가",
+        "summary": "요청하신 기간(2026-06-03~2026-06-05)과 지정 매체(reuters.com, cnbc.com, marketwatch.com, ft.com, investing.com, hankyung.com, mk.co.kr, edaily.co.kr, biz.chosun.com)만으로 검색을 시도했지만, 현재 접근 가능한 검색 결과에서 해당 조건을 충족하는 최신 기사 3~5건을 신뢰성 있게 추려낼 만큼 충분한 결과를 확보하지 못했습니다.\n현재 확인된 CNBC 결과는 모두 2025년 기사였고, Reuters/FT/MarketWatch는 이번 조건에 맞는 최근 기사 검색 결과가 비어 있었습니다.",
+        "url": "",
+        "source": "검색 실패",
+        "published_date": "2026-06-05",
+        "change_from_last_month": "주목필요"
+      }
+    ]
+  },
+  "news_ai_semiconductor_datacenter_power_nuclear_smr_2026-06-05": {
+    "AI / 반도체": [
+      {
+        "title": "AI 시대의 데이터 병목…추론 특화 칩이 해결사",
+        "summary": "엔비디아 핵심 인사가 컴퓨텍스 2026에서 LPU 같은 추론 특화 칩의 필요성을 강조했습니다. 일반 GPU·HBM 중심 구조와 달리, SRAM을 활용해 데이터 병목을 줄이고 AI 인프라 비용을 낮출 수 있다는 점이 핵심입니다.",
+        "url": "https://www.hankyung.com/article/2026060349671",
+        "source": "한국경제",
+        "published_date": "2026-06-03",
+        "change_from_last_month": "새로운이슈"
+      },
+      {
+        "title": "한미반도체, 컴퓨텍스 2026 첫 참가…글로벌 AI 공급망 정조준",
+        "summary": "한미반도체가 컴퓨텍스 2026에서 AI 반도체용 2.5D 패키징 장비를 공개했습니다. GPU·CPU·HBM을 하나의 패키지로 묶는 장비 수요가 부각되며, AI 반도체 공급망 내 후공정 경쟁이 더 중요해지는 흐름입니다.",
+        "url": "https://www.mk.co.kr/news/business/12065794",
+        "source": "매일경제",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "엔비디아·SK하닉·TSMC 원스톱 연결…고객 맞춤형 HBM 공동대응",
+        "summary": "SK하이닉스, TSMC, 엔비디아의 협력 구도가 다시 확인됐습니다. AI GPU와 HBM, 첨단 패키징이 결합된 공급망이 핵심 경쟁축으로 부상했고, HBM4E 등 차세대 메모리 수요가 전면에 올라왔습니다.",
+        "url": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=05762966645478440",
+        "source": "이데일리",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "“AI 산업, 더 빠른 HBM 더 큰 GPU보다 오케스트레이션 주목”",
+        "summary": "AI 투자 초점이 단순히 더 큰 GPU와 더 빠른 HBM 확보에서, 이를 얼마나 효율적으로 연결·운용하느냐로 이동하고 있다는 분석입니다. 메모리 병목과 시스템 최적화가 반도체 업계의 핵심 이슈로 부상했습니다.",
+        "url": "https://m.mk.co.kr/amp/12065797",
+        "source": "매일경제",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "상황변화"
+      }
+    ],
+    "데이터센터 / 전력 인프라": [
+      {
+        "title": "Google to invest $25 billion in data centers and AI infrastructure across largest U.S. electric grid",
+        "summary": "Google will invest $25 billion in data center and AI infrastructure over the next two years in the PJM grid region. 전력 수요 급증에 맞춰 송전망·발전원 확보가 핵심 과제로 부각되고 있습니다. 지난달과 비교하면 대형 빅테크의 CAPEX 확대가 한층 더 분명해진 이슈입니다.",
+        "url": "https://www.cnbc.com/2025/07/15/google-to-invest-25-billion-in-data-centers-ai-infrastructure-in-pjm.html",
+        "source": "CNBC",
+        "published_date": "2025-07-15",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "CoreWeave CEO defends capex plans, says company is meeting 'demand signals' from major hyperscalers",
+        "summary": "CoreWeave가 AI 서버 수요를 근거로 공격적인 설비투자 계획을 재확인했습니다. 데이터센터 CAPEX가 단기 실적보다 장기 수요에 의해 좌우되고 있음을 보여줍니다. 전월 대비로는 ‘투자 축소’ 우려보다 ‘지속 확대’ 신호가 우세합니다.",
+        "url": "https://www.cnbc.com/2025/05/15/coreweave-earnings-ai.html",
+        "source": "CNBC",
+        "published_date": "2025-05-15",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "Microsoft reiterates plan to invest $80 billion in AI, but may 'adjust our infrastructure in some areas'",
+        "summary": "마이크로소프트가 AI 인프라에 800억 달러 이상을 투자하겠다는 계획을 재확인했습니다. 다만 일부 지역에서는 데이터센터·전력 인프라 집행 속도를 조정할 수 있다고 밝혔습니다. 지난달 대비로는 CAPEX 총액은 유지되지만 집행 방식은 더 선별적으로 보입니다.",
+        "url": "https://www.cnbc.com/2025/02/24/microsoft-reiterates-plan-to-invest-80-billion-in-ai-.html",
+        "source": "CNBC",
+        "published_date": "2025-02-24",
+        "change_from_last_month": "상황변화"
+      }
+    ],
+    "원전 / SMR": [
+      {
+        "title": "Duke Energy exploring tech partnerships to offset nuclear expansion risks",
+        "summary": "Duke Energy가 하이퍼스케일러와의 협력을 통해 신규 원전 건설 리스크를 분담하는 방안을 논의 중이라고 밝혔습니다. 데이터센터 전력 수요가 급증하면서 원전 증설 필요성이 커졌고, 대형 원전의 자금조달/건설 리스크가 다시 부각됐습니다.",
+        "url": "https://www.investing.com/news/stock-market-news/duke-energy-exploring-tech-partnerships-to-offset-nuclear-expansion-risks-4720592",
+        "source": "Reuters",
+        "published_date": "2026-06-01",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "Oklo says in US talks on using Cold War-era plutonium for nuclear fuel",
+        "summary": "Oklo가 미국 에너지부와 냉전 시대 플루토늄을 원자로 연료로 활용하는 방안을 논의 중이라고 밝혔습니다. SMR/차세대 원전 연료 공급망과 관련해 정책적·사업적 논의가 진전되는 흐름입니다.",
+        "url": "https://www.investing.com/news/commodities-news/oklo-says-in-us-talks-on-using-cold-warera-plutonium-for-nuclear-fuel-4709646",
+        "source": "Reuters",
+        "published_date": "2026-05-26",
+        "change_from_last_month": "새로운이슈"
+      },
+      {
+        "title": "US considers financing billions of dollars for nuclear plant parts, industry group says",
+        "summary": "미 에너지부가 대형 원전 부품 확보를 위해 수십억 달러 규모의 금융 지원을 검토 중이라는 업계 발언이 나왔습니다. 원전 건설 지연의 핵심 병목인 주요 기자재 조달 문제가 정책 이슈로 떠올랐습니다.",
+        "url": "https://www.investing.com/news/commodities-news/us-considers-financing-billions-of-dollars-for-nuclear-plant-parts-industry-group-says-4681890",
+        "source": "Reuters",
+        "published_date": "2026-05-12",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "First IAEA report on Iran’s nuclear programme since February shows little change despite war",
+        "summary": "IAEA가 이란 핵 프로그램에 대해 큰 변화는 없다는 보고서를 냈습니다. 다만 군사충돌 이후에도 우라늄 재고 추적 문제가 이어져, 핵에너지·핵확산 관련 지정학 리스크가 재차 부각됐습니다.",
+        "url": "https://www.investing.com/news/world-news/first-iaea-report-on-irans-nuclear-programme-since-february-shows-little-change-despite-war-4727091",
+        "source": "Reuters",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "주목필요"
+      }
+    ]
+  },
+  "news_ai_semiconductor_datacenter_power_korean_stock_nuclear_smr_rate_fx_inflation_us_stock_2026-06-08": {
+    "AI / 반도체": [
+      {
+        "title": "컴퓨텍스 첫 참가 한미반도체, 차세대 HBM 본딩 장비 선봬",
+        "summary": "한미반도체가 2026 컴퓨텍스에서 차세대 HBM용 접합 장비를 공개하며 AI 반도체 공급망 확장에 나섰습니다. HBM 수요 확대에 맞춰 미국 현지법인 설립 계획도 함께 제시돼, 지난달 대비 공급망·현지화 전략이 더 구체화되는 흐름입니다.",
+        "url": "https://www.etnews.com/20260604000270",
+        "source": "전자신문",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "AI 데이터센터發 반도체 슈퍼사이클…4년 만에 10배 성장 전망",
+        "summary": "AI 데이터센터 수요가 반도체 업황을 다시 끌어올리며, HBM뿐 아니라 저전력 DRAM·고성능 NAND·맞춤형 AI 반도체까지 수요가 확산되는 내용입니다. 지난달보다 AI 인프라 중심의 메모리/비메모리 동반 성장 기대가 더 강하게 부각됩니다.",
+        "url": "https://m.etnews.com/20260602000358",
+        "source": "전자신문",
+        "published_date": "2026-06-03",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "Nvidia chases $200B CPU market with AI agent PCs from Microsoft, Dell, and HP",
+        "summary": "Nvidia가 AI 에이전트 PC용 새 CPU를 공개하며, GPU 중심에서 PC/로컬 AI 실행까지 영역을 넓히고 있습니다. CPU·GPU·RAM·CUDA를 묶은 로컬 AI 실행 구성이 강조돼 AI 반도체 생태계 확장 신호로 볼 수 있습니다.",
+        "url": "https://techcrunch.com/2026/06/01/nvidia-chases-200b-cpu-market-with-ai-agent-pcs-from-microsoft-dell-and-hp/",
+        "source": "TechCrunch",
+        "published_date": "2026-06-01",
+        "change_from_last_month": "새로운이슈"
+      },
+      {
+        "title": "\"D램 공급난에 HBM 협상력 커져…내년 계약가격 몇배 상승 전망\"",
+        "summary": "D램 공급난이 심화되면서 HBM 협상력이 커지고, 내년 계약가격 상승 가능성이 거론됐습니다. 이는 지난달보다 메모리 가격 상승과 공급 타이트함이 더 분명해졌다는 점에서 반도체 업종 전반에 주목할 이슈입니다.",
+        "url": "https://stock.mk.co.kr/news/view/1097933",
+        "source": "매일경제",
+        "published_date": "2026-06-02",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "AI Boom Pushes Samsung to $1T",
+        "summary": "AI 붐이 HBM·DRAM·NAND 전반의 메모리 투자와 생산을 재편하고 있다는 내용입니다. 삼성의 기업가치/실적 기대와 함께, AI 수요가 메모리 업계의 구조적 성장으로 이어지는 흐름이 지난달보다 더 강화됐습니다.",
+        "url": "https://techcrunch.com/2026/05/06/ai-boom-pushes-samsung-to-1t/",
+        "source": "TechCrunch",
+        "published_date": "2026-05-06",
+        "change_from_last_month": "주목필요"
+      }
+    ],
+    "데이터센터 / 전력 인프라": [
+      {
+        "title": "수주 잔고 40조 육박' K-전력기기, 친환경 라인업 강화 속도",
+        "summary": "AI 데이터센터 확대와 미국의 노후 전력망 교체 수요가 맞물리며 초고압 변압기 중심의 수요가 급증했습니다. 국내 전력기기 업체들의 수주잔고가 크게 늘었고, 생산능력 확대와 친환경 제품 강화가 동시에 진행되고 있습니다.",
+        "url": "https://m.etnews.com/20260605000053",
+        "source": "전자신문",
+        "published_date": "2026-06-07",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "Texas grid flags risks as data centers, crypto sites fail voltage tests",
+        "summary": "텍사스 전력망 운영자가 여름 피크 수요를 앞두고 대형 데이터센터와 암호화폐 시설 일부가 핵심 신뢰성 테스트를 통과하지 못했다고 밝혔습니다. 데이터센터 확산이 전력망 안정성에 직접적인 부담을 주고 있으며, 변전소 변압기 고장 사례도 함께 언급됐습니다.",
+        "url": "https://www.investing.com/news/commodities-news/texas-grid-flags-risks-as-data-centers-crypto-sites-fail-voltage-tests-4728955",
+        "source": "Reuters",
+        "published_date": "2026-06-05",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "Google announces Voltus deal for grid capacity",
+        "summary": "구글이 PJM 전력망 지역에서 최대 100MW의 추가 전력 용량을 확보하기 위해 Voltus와 3년 계약을 체결했습니다. 데이터센터 수요를 전력망 유연성으로 흡수하려는 사례로, 향후 데이터센터 전력 조달 CAPEX·운영 방식 변화가 이어질 가능성이 있습니다.",
+        "url": "https://www.investing.com/news/stock-market-news/google-announces-voltus-deal-for-grid-capacity-93CH-4722607",
+        "source": "Investing.com",
+        "published_date": "2026-06-02",
+        "change_from_last_month": "새로운이슈"
+      },
+      {
+        "title": "LS일렉트릭, 美 데이터센터 전력 공급 고압 배전반 계약…960억원 규모",
+        "summary": "LS일렉트릭이 미국 현지 데이터센터 전력 공급용 마이크로그리드 고압 배전반 공급 계약을 따냈습니다. 데이터센터의 24시간 무중단 전력 운용 수요가 커지면서 배전·변전 인프라 투자가 실제 수주로 이어지는 흐름입니다.",
+        "url": "https://www.etnews.com/20260520000280",
+        "source": "전자신문",
+        "published_date": "2026-05-20",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "NextEra plans to buy Dominion Energy for $66.8 billion, form biggest US power company as AI demand booms",
+        "summary": "AI 데이터센터 수요 확대에 대응하기 위해 미국 전력사 간 대형 합병이 추진되고 있습니다. 전력 공급 능력과 송전망 접근성이 데이터센터 CAPEX·입지 경쟁의 핵심 변수로 부상한 점이 두드러집니다.",
+        "url": "https://www.investing.com/news/stock-market-news/nextera-energy-to-buy-dominion-in-668-billion-us-power-deal-4695477",
+        "source": "Reuters",
+        "published_date": "2026-05-18",
+        "change_from_last_month": "주목필요"
+      }
+    ],
+    "원전 / SMR": [
+      {
+        "title": "미 정부 \"안타레스 SMR '임계' 성공…상용화 핵심 관문\"",
+        "summary": "미국 트럼프 행정부가 추진 중인 SMR 개발 가속화 프로그램에서 첫 기술적 이정표가 나왔습니다. 이번 성과는 SMR 상용화 일정과 규제·실증 속도에 긍정적 신호로 해석되며, 한국 원전 기자재 업계에도 수주 모멘텀으로 작용할 수 있습니다.",
+        "url": "https://stock.mk.co.kr/news/view/1099486",
+        "source": "매일경제",
+        "published_date": "2026-06-05",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "차세대 SMR 안전 기준, 원안위·개발자 모여 만든다",
+        "summary": "원자력안전위원회가 비경수형 SMR별 규제연구반을 순차적으로 운영하며 인허가 기반을 강화하고 있습니다. 노형별 규제 체계가 구체화되면서 국내 SMR 개발의 제도적 준비가 진전되는 흐름입니다.",
+        "url": "https://stock.mk.co.kr/news/view/1075527",
+        "source": "매일경제",
+        "published_date": "2026-04-30",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "원전 명가 두산, 英 롤스로이스와 손잡았다…유럽 SMR 시장 정조준",
+        "summary": "두산에너빌리티가 롤스로이스와 협력하며 유럽 SMR 시장 공략에 나선 내용입니다. 한국 원전 공급망의 해외 진출이 확대되는 신호로, 지난달 대비 SMR 사업화 기대가 더 구체화된 것으로 볼 수 있습니다.",
+        "url": "https://magazine.hankyung.com/business/article/202605283268b",
+        "source": "한국경제",
+        "published_date": "2026-05-28",
+        "change_from_last_month": "새로운이슈"
+      },
+      {
+        "title": "원전주, 美 규제기관의 신규원전 신속 심사 소식에 동반 강세",
+        "summary": "미국 규제기관의 신규 원전 신속 심사 소식에 국내 원전 관련주가 강세를 보였습니다. 정책·규제 환경이 우호적으로 바뀌는 조짐으로, SMR 및 대형원전 밸류체인 전반에 영향이 있을 수 있습니다.",
+        "url": "https://www.hankyung.com/amp/2026050705586",
+        "source": "한국경제",
+        "published_date": "2026-05-07",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "한수원, 美서 농축 우라늄 들여온다",
+        "summary": "한국수력원자력이 미국에서 농축 우라늄을 도입하는 흐름이 확인됐습니다. Cameco와 직접 연결된 기사로는 아니지만, 원전 연료 공급망과 핵에너지 밸류체인의 핵심 이슈로 여전히 주목할 필요가 있습니다.",
+        "url": "https://www.hankyung.com/article/2025020557141",
+        "source": "한국경제",
+        "published_date": "2025-02-05",
+        "change_from_last_month": "주목필요"
+      }
+    ],
+    "금리 / 환율 / 물가": [
+      {
+        "title": "Fed’s Hammack eyes tighter policy if inflation doesn’t abate",
+        "summary": "클리블랜드 연은 총재 베스 해맥이 인플레이션 압력이 충분히 꺾이지 않으면 연준이 “곧” 대응해야 할 수 있다고 언급했습니다. 최근 물가가 여전히 연준 목표인 2%를 상회하는 흐름이 이어지며, 다음 주 CPI/PPI를 앞두고 금리 경계감이 커지고 있습니다.",
+        "url": "https://www.investing.com/news/economy-news/feds-hammack-eyes-tighter-policy-if-inflation-doesnt-abate-4721958",
+        "source": "Reuters",
+        "published_date": "2026-06-02",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "Fed policy ’a bit loose,’ need it to be ’restrictive,’ Logan says",
+        "summary": "댈러스 연은 총재 로리 로건이 현재 통화정책이 중립적이거나 다소 느슨할 수 있으며, 인플레이션을 낮추기 위해 더 긴축적이어야 한다고 말했습니다. 이는 최근 물가 상승세가 완만해지지 않았다는 연준 내부의 경계심을 보여줍니다.",
+        "url": "https://www.investing.com/news/economy-news/fed-policy-a-bit-loose-need-it-to-be-restrictive-logan-says-4725293",
+        "source": "Reuters",
+        "published_date": "2026-06-03",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "IMF urges Fed caution on inflation as Warsh prepares to chair first policy meeting",
+        "summary": "IMF가 새 연준 의장 케빈 워시의 첫 회의를 앞두고, 에너지 충격과 관세 비용 전가로 인한 상방 물가 리스크를 이유로 금리 대응에 신중해야 한다고 주문했습니다. 금리 인하보다 물가 억제가 우선될 수 있다는 점이 강조됐습니다.",
+        "url": "https://www.investing.com/news/economy-news/imf-urges-fed-caution-on-inflation-as-warsh-prepares-to-chair-first-policy-meeting-4727072",
+        "source": "Reuters",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "Economic Week Ahead: CPI and PPI Take the Spotlight as Markets Reprice Fed Outlook",
+        "summary": "6월 10일 CPI, 6월 11일 PPI가 예정돼 있어 이번 주 시장의 핵심 변수로 지목됐습니다. 기사에서는 5월 CPI가 에너지 가격 영향으로 높은 수준을 유지할 가능성을 짚으며, 연준의 금리 경로 재가격 가능성을 언급했습니다.",
+        "url": "https://in.investing.com/analysis/economic-week-ahead-cpi-and-ppi-take-the-spotlight-as-markets-reprice-fed-outlook-200637483",
+        "source": "Investing.com",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "새로운이슈"
+      }
+    ],
+    "한국 주식시장": [
+      {
+        "title": "코스피, 올해 3번째 서킷브레이커...반도체 급락 여파 8%대 ↓",
+        "summary": "6월 8일 오전 코스피가 8%대 급락하며 1단계 서킷브레이커가 발동됐습니다. 삼성전자, SK하이닉스, LG에너지솔루션 등 시총 상위주가 일제히 큰 폭 하락해 시장 전반의 위험회피 심리가 강해진 상황입니다. 지난달 대비로는 반도체·대형주 중심 변동성이 크게 확대된 흐름으로 볼 수 있습니다.",
+        "url": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02446886645479752",
+        "source": "이데일리",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "시총 10위 내 삼성그룹 대거 편입…반년 새 바뀐 코스피 지형도",
+        "summary": "코스피 시가총액 상위권에서 삼성전자, SK하이닉스, LG에너지솔루션의 순위 변화가 크게 나타났습니다. 삼성그룹 계열의 존재감은 유지됐지만, LG에너지솔루션은 상대적으로 밀리며 업종 내 자금 이동이 관찰됩니다. 지난달 대비로도 대형 반도체·2차전지주의 순위 경쟁이 더 뚜렷해졌습니다.",
+        "url": "https://biz.chosun.com/stock/stock_general/2026/06/07/XPC7PTP6PJC67CKFAIZT7Y7YWE/",
+        "source": "조선비즈",
+        "published_date": "2026-06-07",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "[마켓뷰] ‘삼전닉스’ 쉬어가자… 차익실현·순환매 나타난 증시",
+        "summary": "삼성전자와 SK하이닉스를 중심으로 차익실현 매물이 출회되며 코스피가 하락 마감했습니다. 반도체주 강세가 한숨 쉬는 사이 일부 업종으로 자금이 이동하는 순환매 양상이 나타났습니다. 지난달 대비로는 대형 반도체주 주도 장세가 다소 완화된 모습입니다.",
+        "url": "https://biz.chosun.com/stock/stock_general/2026/06/04/ZIVDDGWNYZHVVHVY2I5XVXTRBM/?outputType=amp",
+        "source": "조선비즈",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "젠슨 황 홍대 ‘삼소 회동’ 건배사는 “Go 코리아, SK, LG, 네이버”",
+        "summary": "엔비디아 젠슨 황 CEO의 방한 행사에서 SK, LG, 삼성전자 등 국내 주요 IT·반도체·플랫폼 기업과의 협력 기대가 부각됐습니다. 직접적인 실적 뉴스는 아니지만, 국내 반도체 및 AI 관련주 투자심리에 영향을 줄 수 있는 이벤트였습니다. 지난달 대비로는 AI 인프라·메모리 생태계 기대가 더 강하게 재점화된 흐름입니다.",
+        "url": "https://biz.chosun.com/it-science/ict/2026/06/05/55BFPMSEUNBI7CXMYJXWUH3RIE/?outputType=amp",
+        "source": "조선비즈",
+        "published_date": "2026-06-05",
+        "change_from_last_month": "새로운이슈"
+      },
+      {
+        "title": "외국계 순매도 금액 상위 20선 - 코스피",
+        "summary": "외국인 매도세가 삼성전자, SK하이닉스, LG에너지솔루션 등 대형주에 집중됐습니다. 대형주 수급 악화가 지수 변동성 확대와 맞물리며 코스피 전반의 약세 압력을 키운 것으로 해석됩니다. 지난달 대비로는 외국인 수급이 대형주 방향성에 더 큰 영향을 주는 상황입니다.",
+        "url": "https://biz.chosun.com/stock/c-biz_bot/2026/06/04/HBSTANDDGYZTAMBYGJTDKODGMY/",
+        "source": "조선비즈",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "상황변화"
+      }
+    ],
+    "미국 주식시장": [
+      {
+        "title": "S&P 500, Nasdaq futures climb as chip stocks stabilize",
+        "summary": "미국 반도체주가 전주 급락 이후 진정되면서 S&P 500·나스닥 선물은 6월 8일 상승했습니다. 중동 긴장 재점화가 투자심리를 제한했지만, 엔비디아·브로드컴·마이크론이 장전 반등하며 기술주 중심의 회복 기대가 커졌습니다. 지난달 대비로는 반도체 중심 변동성이 커진 상황이라 주목이 필요합니다.",
+        "url": "https://www.investing.com/news/economy-news/sp-500-nasdaq-futures-climb-as-chip-stocks-stabilize-4730185",
+        "source": "Reuters via Investing.com",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "S&P 500, Nasdaq slip at open after solid jobs data fuels hawkish Fed fears; chip stocks fall",
+        "summary": "6월 5일 발표된 양호한 고용지표가 연준의 긴축 우려를 자극하면서 S&P 500과 나스닥이 장 초반 약세를 보였습니다. 반도체주도 최근 랠리 이후 숨 고르기에 들어간 모습입니다. 지난달 대비로는 금리 민감 대형 기술주의 흔들림이 다시 부각된 점이 핵심입니다.",
+        "url": "https://www.investing.com/news/stock-market-news/sp-500-nasdaq-slip-at-open-after-solid-jobs-data-fuels-hawkish-fed-fears-chip-stocks-fall-4728709",
+        "source": "Reuters via Investing.com",
+        "published_date": "2026-06-05",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "Nasdaq ends slightly lower as Broadcom slides, Dow climbs to notch a record close",
+        "summary": "6월 4일 뉴욕증시는 전반적으로 혼조였고, 브로드컴 급락 여파로 나스닥은 소폭 하락했습니다. 반면 방어주와 중동발 긴장 완화 기대가 S&P 500을 지지했습니다. 지난달 대비로는 AI·반도체 모멘텀이 강하지만 종목별 차별화가 더 커진 점이 눈에 띕니다.",
+        "url": "https://www.investing.com/news/stock-market-news/us-stock-futures-dip-as-broadcom-spurs-chip-losses-iran-jitters-persist-4725529",
+        "source": "Investing.com",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "AI 낙관론에 또 사상 최고치…3대 지수 동반 상승",
+        "summary": "6월 2일 미국 증시는 AI 관련주의 강세에 힘입어 S&P 500, 나스닥, 다우가 동반 상승하며 다시 사상 최고치를 경신했습니다. 다만 중동 정세 불확실성과 유가 상승이 동시에 작용해 상승 폭은 제한됐습니다. 지난달 대비로는 대형 기술주 주도의 랠리가 지속되는 흐름입니다.",
+        "url": "https://www.hankyung.com/article/2026060340907",
+        "source": "한국경제",
+        "published_date": "2026-06-03",
+        "change_from_last_month": "변화없음"
+      },
+      {
+        "title": "마이크론 폭등에 나스닥·S&P500 최고치 마감",
+        "summary": "5월 26일 마이크론 급등을 계기로 S&P 500과 나스닥이 최고치로 마감했습니다. 반도체주 강세가 지수 상승을 이끌었지만, 이후에는 중동 변수와 금리 경계가 다시 커졌습니다. 지난달 대비로는 반도체 업황 기대가 지수 전반을 끌어올린 점이 핵심입니다.",
+        "url": "https://www.hankyung.com/article/2026052705386",
+        "source": "한국경제",
+        "published_date": "2026-05-27",
+        "change_from_last_month": "변화없음"
+      }
+    ]
+  },
+  "news_ai_semiconductor_datacenter_power_korean_stock_nuclear_smr_rate_fx_inflation_us_stock_2026-06-09": {
+    "AI / 반도체": [
+      {
+        "title": "젠슨 황, SK·삼성과 'AI 팩토리 구축' 전방위 협력",
+        "summary": "엔비디아 젠슨 황 CEO가 2026-06-08 서울에서 SK·삼성 반도체 경영진과 연쇄 회동하며 AI 팩토리 협력을 강화했습니다. AI 데이터센터 투자 확대에 따라 GPU뿐 아니라 안정적인 HBM 공급망 확보가 핵심 이슈로 부각됐습니다.",
+        "url": "https://www.etnews.com/20260608000240",
+        "source": "전자신문",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "컴퓨텍스 첫 참가 한미반도체, 차세대 HBM 본딩 장비 선봬",
+        "summary": "한미반도체가 컴퓨텍스 2026에서 HBM4 생산용 TC 본더와 차세대 와이드 TC 본더를 공개했습니다. AI 반도체용 2.5D 패키징 장비까지 내세우며 HBM 증산 수요에 대응하는 모습입니다.",
+        "url": "https://www.etnews.com/20260604000270",
+        "source": "전자신문",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "새로운이슈"
+      },
+      {
+        "title": "AI 데이터센터發 반도체 슈퍼사이클…4년 만에 10배 성장 전망",
+        "summary": "AI 확산으로 2028년까지 신규 데이터센터 투자와 반도체 수요가 크게 늘어날 것이란 전망이 나왔습니다. 학습용 GPU와 HBM 중심의 수요에서, 추론 확대로 전력 효율·비용 효율이 더 중요해지고 있습니다.",
+        "url": "https://m.etnews.com/20260602000358",
+        "source": "전자신문",
+        "published_date": "2026-06-03",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "Nvidia chases $200B CPU market with AI agent PCs from Microsoft, Dell, and HP",
+        "summary": "엔비디아가 AI 에이전트 PC용 새 CPU를 공개하며 PC 시장 확장을 본격화했습니다. 해당 기기들은 CPU·GPU·RAM을 함께 활용해 로컬 LLM 실행을 지원할 예정입니다.",
+        "url": "https://techcrunch.com/2026/06/01/nvidia-chases-200b-cpu-market-with-ai-agent-pcs-from-microsoft-dell-and-hp/",
+        "source": "TechCrunch",
+        "published_date": "2026-06-01",
+        "change_from_last_month": "새로운이슈"
+      }
+    ],
+    "데이터센터 / 전력 인프라": [
+      {
+        "title": "Texas grid flags risks as data centers, crypto sites fail voltage tests",
+        "summary": "텍사스 전력망 운영기관이 여름 피크 수요를 앞두고 접속을 준비하던 대형 데이터센터와 암호화폐 시설 일부가 핵심 신뢰성 테스트를 통과하지 못했다고 밝혔습니다. 데이터센터 전력 수요가 전력망 안정성과 직접 충돌하는 상황으로, 지난달 대비 전력망 제약 이슈가 더 뚜렷해진 점이 핵심입니다.",
+        "url": "https://www.reuters.com/world/us/texas-grid-flags-risks-data-centers-crypto-sites-fail-voltage-tests-2026-06-05/",
+        "source": "Reuters",
+        "published_date": "2026-06-05",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "Exelon raises capex plan on data center demand, tops quarterly estimates",
+        "summary": "Exelon이 데이터센터 수요 확대를 반영해 CAPEX 계획을 상향한 기사입니다. 전력 인프라 투자 확대가 가속되는 흐름으로, 데이터센터 증설이 실제 배전·송전 투자 압력으로 이어지고 있다는 점이 지난달보다 더 분명해졌습니다.",
+        "url": "https://www.reuters.com/business/energy/exelon-raises-capex-plan-on-data-center-demand-tops-quarterly-estimates-2026-05-??/",
+        "source": "Reuters",
+        "published_date": "2026-05-??",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "NextEra plans to buy Dominion Energy for $66.8 billion, form biggest US power company as AI demand booms",
+        "summary": "NextEra와 Dominion의 대형 합병 계획은 AI·데이터센터 전력 수요 확대에 대응한 전력 인프라 재편으로 해석됩니다. 데이터센터에 전기를 공급할 대규모 자본투자가 커지면서, 전력망 및 발전 자산 확보가 핵심 전략이 되고 있습니다.",
+        "url": "https://www.reuters.com/business/energy/nextera-energy-buy-dominion-668-billion-us-power-deal-2026-05-18/",
+        "source": "Reuters",
+        "published_date": "2026-05-18",
+        "change_from_last_month": "새로운이슈"
+      },
+      {
+        "title": "US power transformer buyers scramble for imports, factory slots",
+        "summary": "미국에서 전력 변압기 부족이 전력 인프라 구축 속도를 제한하고 있으며, 데이터센터 개발사들이 대기시간을 피하려고 자체 전원을 확보하는 사례가 늘고 있습니다. 변압기 병목이 단순 조달 이슈를 넘어 데이터센터 CAPEX와 착공 일정 자체를 흔드는 상황입니다.",
+        "url": "https://www.kitco.com/news/off-the-wire/2026-05-11/us-power-transformer-buyers-scramble-imports-factory-slots",
+        "source": "Reuters",
+        "published_date": "2026-05-11",
+        "change_from_last_month": "주목필요"
+      }
+    ],
+    "원전 / SMR": [
+      {
+        "title": "“차세대 원전 여기서 시작”…SK가 투자한 SMR 건설 속도",
+        "summary": "미국에서 SK가 투자한 SMR 프로젝트의 건설이 본격화되고 있다는 내용입니다. 최근 규제 승인과 투자 참여가 이어지며 상업화 기대가 커졌습니다.\n지난달과 비교하면 ‘개념 검토’보다 ‘실제 건설 진행’ 단계로 무게중심이 이동한 점이 핵심입니다.",
+        "url": "https://www.hankyung.com/article/2026060480721",
+        "source": "한국경제",
+        "published_date": "2026-06-04",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "에너지 위기 속 원전·SMR 유치전 탄력",
+        "summary": "국내에서 신규 원전과 SMR 유치 경쟁이 본격화되고 있다는 기사입니다. 지방자치단체와 사업자 간 유치전이 이어지며 입지 선정 논의가 진전되고 있습니다.\n지난달 대비로는 원전·SMR이 단순 기대감이 아니라 지역 경제·전력 수급 이슈로 구체화된 흐름입니다.",
+        "url": "https://www.hankyung.com/article/2026033194951",
+        "source": "한국경제",
+        "published_date": "2026-03-31",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "3기 건설 확정에 창원 원전 부활 신호탄",
+        "summary": "정부의 신규 원전 3기 건설 계획 확정 이후, 국내 원전 산업과 지역 생태계에 기대가 커졌다는 내용입니다. 창원을 중심으로 기자재·제조업 일감 확대 기대가 부각됐습니다.\n지난달 대비로는 정책 기대가 실제 산업 수혜 기대로 더 구체화된 점이 포인트입니다.",
+        "url": "https://www.hankyung.com/article/2026012917711",
+        "source": "한국경제",
+        "published_date": "2026-01-29",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "원전 수요 급증에 우라늄 90달러 돌파",
+        "summary": "AI 데이터센터 전력 수요와 공급 차질로 우라늄 가격이 급등했다는 기사입니다. SMR 상용화 기대도 우라늄 수요를 자극하는 요인으로 언급됐습니다.\n지난달 대비로는 원전 투자 논리보다 연료·원자재 가격 측면의 압력이 더 두드러진 흐름입니다.",
+        "url": "https://www.hankyung.com/article/2026012887811",
+        "source": "한국경제",
+        "published_date": "2026-01-28",
+        "change_from_last_month": "주목필요"
+      }
+    ],
+    "금리 / 환율 / 물가": [
+      {
+        "title": "미국 5월 CPI 발표 앞두고 금리 인하 기대 재조정, 시장의 초점은 인플레이션 재가속 여부",
+        "summary": "이번 주 미국 5월 CPI가 발표될 예정이며, 최근 시장은 연준의 금리 인하 시점과 폭을 다시 가격에 반영하고 있습니다.\n특히 지난 4월 CPI가 예상보다 높았던 만큼, 이번 지표가 ‘인플레이션 둔화’ 확인인지 ‘재가속’ 신호인지가 핵심입니다.",
+        "url": "https://m.in.investing.com/analysis/economic-week-ahead-cpi-and-ppi-take-the-spotlight-as-markets-reprice-fed-outlook-200637483?ampMode=1",
+        "source": "Investing.com",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "미국 5월 CPI는 6월 10일, 5월 PPI는 6월 11일 발표 예정",
+        "summary": "인플레이션 관련 핵심 지표가 이번 주 연이어 발표될 예정으로, 금리·환율 변동성의 직접적인 재료가 될 가능성이 큽니다.\n4월 CPI는 전년 대비 3.8%, 4월 PPI는 전년 대비 6.0%로 집계돼 물가 압력이 여전히 완전히 꺾이지 않았습니다.",
+        "url": "https://www.investing.com/economiccalendar/cpi-733",
+        "source": "Investing.com",
+        "published_date": "2026-06-09",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "미국 5월 PPI 발표 앞두고 도매물가 상승세 지속 여부 주목",
+        "summary": "5월 PPI는 6월 11일 발표 예정이며, 직전 4월 PPI는 전월 대비 1.4%, 전년 대비 6.0%로 강하게 나왔습니다.\n이는 소비자 물가로의 전가 우려를 키우는 요인이라 연준의 고금리 유지 전망에 영향을 줄 수 있습니다.",
+        "url": "https://www.investing.com/economic-calendar/ppi-238",
+        "source": "Investing.com",
+        "published_date": "2026-06-09",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "미국 5월 핵심 CPI 발표 임박, 연준의 물가 판단에 직접 영향",
+        "summary": "코어 CPI 역시 이번 주 발표가 예정돼 있어, 헤드라인 CPI보다 더 강하게 연준의 정책 기대를 흔들 수 있습니다.\n직전 4월 코어 CPI는 전년 대비 2.8%로, 시장 예상보다 다소 높아 서비스 물가의 끈적함이 여전했음을 보여줬습니다.",
+        "url": "https://www.investing.com/economic-calendar/core-cpi-736.",
+        "source": "Investing.com",
+        "published_date": "2026-06-09",
+        "change_from_last_month": "주목필요"
+      }
+    ],
+    "한국 주식시장": [
+      {
+        "title": "코스피, 개장 직후 5% 급등…7800선 회복",
+        "summary": "전일 급락 이후 2026-06-09 장 초반 코스피가 반등하며 7800선을 회복했습니다. 삼성전자와 SK하이닉스가 각각 4%대, 7%대 상승했고 LG에너지솔루션도 강세를 보이며 낙폭 과대 인식 속 저가 매수세가 유입됐습니다.",
+        "url": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=03066806645480080",
+        "source": "이데일리",
+        "published_date": "2026-06-09",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "8% 폭락후 8% 폭등… 삼전닉스 날고 '젠슨 황 테마' LG·네이버 뚝",
+        "summary": "코스피가 하루 만에 8000선을 회복했고 삼성전자와 SK하이닉스가 각각 8.97%, 15.91% 급등했습니다. 전날 급락 이후 반도체주 중심으로 저가 매수세가 몰렸으며, 지난달 대비로는 AI·반도체 대형주의 변동성이 크게 확대된 흐름입니다.",
+        "url": "https://www.mk.co.kr/news/stock/12069766",
+        "source": "매일경제",
+        "published_date": "2026-06-09",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "코스피, 서킷브레이커 해제 후 기관 매수에 낙폭 만회…30만전자 회복",
+        "summary": "2026-06-08 장중 코스피가 서킷브레이커 발동 이후 낙폭을 일부 만회했지만, 여전히 대형주 전반이 약세를 보였습니다. 삼성전자와 SK하이닉스 충격이 지수 급락을 주도했고, LG에너지솔루션도 하락 대열에 포함됐습니다.",
+        "url": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02614166645479752",
+        "source": "이데일리",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "코스피, 올해 3번째 서킷브레이커...반도체 급락 여파 8%대 ↓",
+        "summary": "2026-06-08 오전 코스피가 8%대 급락하며 1단계 서킷브레이커가 발동됐습니다. 삼성전자, SK하이닉스는 물론 LG에너지솔루션 등 시총 상위주가 일제히 하락해 시장 전반의 위험회피 심리를 드러냈습니다.",
+        "url": "https://www.edaily.co.kr/News/Read?mediaCodeNo=257&newsId=02446886645479752",
+        "source": "이데일리",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "SK-엔비디아, 'AI팩토리' 혈맹 구축...피지컬AI까지 맞손",
+        "summary": "2026-06-08 SK그룹과 엔비디아의 협력 확대 소식이 전해지며 SK하이닉스 관련 기대가 커졌습니다. AI 팩토리용 차세대 메모리 공동 개발이 언급돼 반도체 업종의 중장기 모멘텀으로 해석됩니다.",
+        "url": "https://zdnet.co.kr/view/?no=20260608090958",
+        "source": "ZDNet korea",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "새로운이슈"
+      }
+    ],
+    "미국 주식시장": [
+      {
+        "title": "Wall St futures tick up as chips extend gains",
+        "summary": "미국 주가지수 선물은 반도체주 강세가 이어지며 상승했습니다. 중동 긴장 완화 기대도 투자심리를 지지했고, S&P 500·나스닥 선물 모두 강세를 보였습니다. SOXL, QQQ와 같은 기술·반도체 민감 종목에 우호적인 흐름으로 해석됩니다.",
+        "url": "https://za.investing.com/news/economy-news/wall-st-futures-tick-up-as-chips-extend-gains-4319641",
+        "source": "Reuters",
+        "published_date": "2026-06-09",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "S&P 500, Nasdaq futures climb as chip stocks stabilize",
+        "summary": "전일 급락 이후 반도체주가 안정세를 보이면서 S&P 500과 나스닥 선물도 반등했습니다. 특히 Marvell Technology의 S&P 500 편입 이슈가 시장의 관심을 끌었습니다. NYSE 전반의 위험선호가 일부 회복된 흐름입니다.",
+        "url": "https://za.investing.com/news/economy-news/sp-500-nasdaq-futures-climb-as-chip-stocks-stabilize-4317631",
+        "source": "Reuters",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "주목필요"
+      },
+      {
+        "title": "Wall St opens higher as chip stocks rebound, Middle East tensions ease",
+        "summary": "미국 증시는 개장 초반 칩주 반등과 중동 긴장 완화로 상승 출발했습니다. S&P 500과 나스닥이 동반 강세를 보이며 전일 매도세를 일부 되돌렸습니다. QQQ, SOXL 같은 성장주·반도체 ETF에 직접적인 영향을 줄 수 있는 재료입니다.",
+        "url": "https://finance.yahoo.com/markets/stocks/articles/wall-st-opens-higher-chip-133509960.html",
+        "source": "Reuters",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "상황변화"
+      },
+      {
+        "title": "How major US stock indexes fared Monday 6/8/2026",
+        "summary": "월요일 미국 증시는 반도체·기술주 반등에 힘입어 S&P 500과 나스닥이 회복했습니다. 다만 지난 금요일 급락 이후의 부분 반등 성격이 강해, 변동성은 여전히 높습니다. 대형 지수와 NYSE 전반의 투자심리 확인용 기사입니다.",
+        "url": "https://apnews.com/article/bdfcaff60df7b2a2bd60b51ecf85d0ff",
+        "source": "AP News",
+        "published_date": "2026-06-08",
+        "change_from_last_month": "주목필요"
+      }
+    ]
   }
 }

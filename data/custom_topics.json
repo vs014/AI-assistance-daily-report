@@ -44,6 +44,13 @@
         "전력망",
         "냉각시스템"
       ]
+    },
+    {
+      "id": "new_life_sciences_biotech",
+      "label": "바이오 / 생명과학",
+      "keywords": [
+        "바이오 / 생명과학"
+      ]
     }
   ]
 }

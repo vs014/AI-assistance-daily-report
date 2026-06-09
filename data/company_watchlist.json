@@ -1,1 +1,15 @@
-{"companies": [], "updated_at": "2026-06-08"}
+{
+  "companies": [
+    {
+      "name": "Thermo Fisher Scientific Inc.",
+      "ticker": "TMO",
+      "added_at": "2026-06-08"
+    },
+    {
+      "name": "Amazon.com, Inc.",
+      "ticker": "AMZN",
+      "added_at": "2026-06-08"
+    }
+  ],
+  "updated_at": "2026-06-08"
+}
